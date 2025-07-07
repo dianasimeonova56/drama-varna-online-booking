@@ -1,0 +1,31 @@
+header {
+    background-color: #cd2122;
+    color: white;
+    padding: 12px;
+    font-size: 17px;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.logo-wrap img {
+    height: 40px;
+}
+
+
+nav a {
+    color: white;
+    /* margin-right: 12px; */
+    text-decoration: none;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 16px;
+    margin: 0;        /* Remove default margin */
+}
