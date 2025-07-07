@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { PlayItem } from "../../../shared/components/play-item/play-item";
 
 @Component({
   selector: 'app-home-recent-plays',
-  imports: [],
+  imports: [PlayItem],
   templateUrl: './home-recent-plays.html',
   styleUrl: './home-recent-plays.css'
 })
