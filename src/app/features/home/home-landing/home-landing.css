@@ -1,12 +1,3 @@
-section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 80vh;
-    /* Or 100vh for full screen */
-    padding: 40px 20px;
-}
-
 .home-landing {
     display: flex;
     align-items: center;
