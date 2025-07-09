@@ -8,7 +8,7 @@ import { Play } from "../../models/play.model";
 })
 
 export class PlaysService {
-    private apiUrlForLatest = 'http://localhost:3000/api/get-latest-plays?limit={0}';
+    private apiUrlForLatest = 'http://localhost:3000/api/plays/get-latest-plays?limit={0}';
     private apiUrl = 'http://localhost:3000/api/plays';
 
     constructor(private httpClient:HttpClient) {}

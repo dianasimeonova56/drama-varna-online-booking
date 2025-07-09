@@ -16,8 +16,8 @@ function getLatestsPlays(req, res, next) {
     playModel.find()
         .sort({ created_at: -1 })
         .limit(limit)
-        .then(posts => {
-            res.status(200).json(posts)
+        .then(plays => {
+            res.status(200).json(plays)
         })
         .catch(next);
 }
@@ -26,8 +26,8 @@ function getPlays(req, res, next) {
     return playModel.find()
         // .populate('director')
         // .populate('ratings.user')
-        .then(posts => {
-            res.status(200).json(posts)
+        .then(plays => {
+            res.status(200).json(plays)
         })
         .catch(next);;
 }
@@ -37,8 +37,8 @@ function getPlay(req, res, next) {
 
     return playModel.findById(playId)
         .populate('director')
-        .then(posts => {
-            res.status(200).json(posts)
+        .then(plays => {
+            res.status(200).json(plays)
         })
         .catch(next);;
 }

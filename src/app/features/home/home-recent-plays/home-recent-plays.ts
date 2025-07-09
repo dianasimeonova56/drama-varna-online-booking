@@ -16,9 +16,9 @@ export class HomeRecentPlays {
   play$: Observable<Play[]>;
 
   constructor(private playsService: PlaysService) {
-    // this.play$ = this.playsService.getLatestPlays();
-    this.play$ = this.playsService.getPlays();
-    console.log(this.play$);
+    this.play$ = this.playsService.getLatestPlays();
+    // this.play$ = this.playsService.getPlays();
+    // console.log(this.play$);
     
   }
 }

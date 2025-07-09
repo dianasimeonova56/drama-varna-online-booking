@@ -8,8 +8,9 @@ const { playController } = require('../controllers');
 router.get('/', playController.getPlays);
 router.post('/', auth(), playController.createPlay);
 
-router.get('/:playId', playController.getPlay);
 router.get('/get-latest-plays', playController.getLatestsPlays)
+router.get('/:playId', playController.getPlay);
+
 
 router.put('/:playId/edit', auth(), playController.editPlay);
 router.delete('/:playId/delete', auth(), playController.deletePlay);
