@@ -1,9 +1,10 @@
 export interface Play {
     id: string;
-    name: string;
+    playName: string;
     description: string;
     date: string;
+    image: string;
     //cast - collection of actors
-    //director
+    director: Array<string>;
     averageRating: number; // users add rating for play; only if watched?
 }
