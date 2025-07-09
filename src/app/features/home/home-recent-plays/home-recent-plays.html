@@ -1,6 +1,9 @@
 <div class="recent-plays">
     <h2>Recent Plays</h2>
     <div class="plays-grid">
-        <app-play-item></app-play-item>
+        @for(play of play$ | async; track play._id) {
+        <app-play-item [play]="play"></app-play-item>
+        }
+
     </div>
 </div>
