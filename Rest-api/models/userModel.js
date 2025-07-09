@@ -36,10 +36,10 @@ const userSchema = new mongoose.Schema({
     role: {
         type: String,
         required: true,
-        //add validation - either user or admin
+        enum: ['user', 'admin'],
     },
     favorites: [{
-        type: String,
+        type: ObjectId,
         ref: "Play"
     }]
 }, { timestamps: { createdAt: 'created_at' } });

@@ -14,14 +14,17 @@ const playSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
+    place: {
+        type: String,
+        required: true,
+    },
     imageUrl: {
         type: String,
         required: true,
         validate: [/^https?:\/\//, 'Invalid image url!']
     },
     director: [{
-        type: ObjectId,
-        ref: 'Director',
+        type: String,
     }],
     ratings: [{
         user: {

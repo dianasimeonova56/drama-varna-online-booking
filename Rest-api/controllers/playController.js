@@ -16,7 +16,6 @@ function getLatestsPlays(req, res, next) {
     playModel.find()
         .sort({ created_at: -1 })
         .limit(limit)
-        .populate('director')
         .then(posts => {
             res.status(200).json(posts)
         })
@@ -25,7 +24,7 @@ function getLatestsPlays(req, res, next) {
 
 function getPlays(req, res, next) {
     return playModel.find()
-        .populate('director')
+        // .populate('director')
         // .populate('ratings.user')
         .then(posts => {
             res.status(200).json(posts)
