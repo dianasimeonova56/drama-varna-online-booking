@@ -6,5 +6,5 @@ import { PlayDetailsComponent } from './features/play/play-details/play-details'
 export const routes: Routes = [
      { path: '', component: Home },
      { path: 'plays', component: PlaysComponent },
-     { path: 'play-details/:playId', component: PlayDetailsComponent}
+     { path: 'plays/:playId', component: PlayDetailsComponent}
 ];

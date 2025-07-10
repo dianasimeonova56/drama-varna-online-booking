@@ -36,9 +36,9 @@ function getPlay(req, res, next) {
     const playId = req.params.playId;
 
     return playModel.findById(playId)
-        .populate('director')
-        .then(plays => {
-            res.status(200).json(plays)
+        // .populate('director')
+        .then(play => {
+            res.status(200).json(play)
         })
         .catch(next);;
 }

@@ -9,16 +9,20 @@ import { Play } from "../../models/play.model";
 
 export class PlaysService {
     // TODO : polish calling apiURL for different routes
-    private apiUrlForLatest = 'http://localhost:3000/api/plays/get-latest-plays?limit={0}';
+    // private apiUrlForLatest = 'http://localhost:3000/api';
     private apiUrl = 'http://localhost:3000/api/plays';
 
     constructor(private httpClient:HttpClient) {}
 
     getLatestPlays(limit: number = 1): Observable<Play[]> {
-        return this.httpClient.get<Play[]>(this.apiUrlForLatest.replace('{0}', limit.toString()) )
+        return this.httpClient.get<Play[]>(this.apiUrl + '/get-latest-plays?limit={0}'.replace('{0}', limit.toString()) )
     }
 
     getPlays(): Observable<Play[]> {
         return this.httpClient.get<Play[]>(this.apiUrl);
+    }
+
+    getPlay(playId: string): Observable<Play> {
+        return this.httpClient.get<Play>(this.apiUrl + `/${playId}`);
     }
 }

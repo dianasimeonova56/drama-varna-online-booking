@@ -1,3 +1,5 @@
-<section>
-    
+<section class="plays">
+    @for(play of plays$ | async; track play._id) {
+        <app-play-item [play]="play"></app-play-item>
+    }
 </section>
