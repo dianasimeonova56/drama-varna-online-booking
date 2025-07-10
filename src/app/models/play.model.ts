@@ -1,3 +1,5 @@
+import { Rating } from "./rating.model";
+
 export interface Play {
     _id: string;
     director: Array<string>;
@@ -7,6 +9,5 @@ export interface Play {
     place: string;
     imageUrl: string;
     //cast - collection of actors
-
-    averageRating: number; // users add rating for play; only if watched?
+    ratings: Array<Rating>; // users add rating for play; only if watched?
 }

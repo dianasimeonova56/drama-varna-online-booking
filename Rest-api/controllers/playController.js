@@ -83,28 +83,28 @@ function deletePlay(req, res, next) {
 }
 
 async function addRating(req, res, next) {
-    const playId = req.params;
+    const {playId} = req.params;
     const { rating } = req.body;
-    const { _id: userId } = req.user;
-
-    if (!play) {
-        throw new Error("Play not found!");
-    }
+    // const { _id: userId } = req.user;
+    
 
      try {
         const play = await playModel.findById(playId);
+        console.log(play);
+        
+        
 
         if (!play) {
             return res.status(404).json({ message: 'Play not found' });
         }
 
-        const existingRating = play.ratings.find(r => r.user.toString() === userId);
+        // const existingRating = play.ratings.find(r => r.user.toString() === userId);
 
-        if (existingRating) {
-            existingRating.rating = rating;
-        } else {
-            play.ratings.push({ user: userId, rating });
-        }
+        // if (existingRating) {
+        //     existingRating.rating = rating;
+        // } else {
+            play.ratings.push({ user: "686e3a5899ccbc29fcf87ba5", rating });
+        //}
 
         const total = play.ratings.reduce((sum, r) => sum + r.rating, 0);
         play.averageRating = total / play.ratings.length;

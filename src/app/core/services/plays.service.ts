@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { Play } from "../../models/play.model";
+import { Rating } from "../../models";
 
 @Injectable({
     providedIn: 'root'
@@ -24,5 +25,11 @@ export class PlaysService {
 
     getPlay(playId: string): Observable<Play> {
         return this.httpClient.get<Play>(this.apiUrl + `/${playId}`);
+    }
+
+    addRating(playId: string, rating: number) {
+        console.log(this.apiUrl + `/${playId}/add-rating`);
+        
+        return this.httpClient.patch<Play>(this.apiUrl + `/${playId}/add-rating`, {rating})
     }
 }

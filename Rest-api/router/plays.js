@@ -15,7 +15,8 @@ router.get('/:playId', playController.getPlay);
 router.put('/:playId/edit', auth(), playController.editPlay);
 router.delete('/:playId/delete', auth(), playController.deletePlay);
 
-router.put('/:playId/add-rating', auth(), playController.addRating)
+router.patch('/:playId/add-rating', playController.addRating)
+// router.put('/:playId/add-rating', auth(), playController.addRating)
 
 // router.get('/my-trips/:id/reservations', auth(), themeController.getReservations);
 

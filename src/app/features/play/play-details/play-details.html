@@ -22,7 +22,12 @@
                         <div class="title">{{ play.playName }}</div>
 
                         <div class="info">
-                            <p>Режисьор: <br />{{ play.director[0] }}</p>
+                            <p>Director: <br />{{ play.director[0] }}</p>
+                            <p>Description: <br />{{ play.description }}</p>
+                            <p>Duration: <br /></p>
+                            <p>Actors: <br /></p>
+                            <p>Average Rating: <br /></p>
+                            <app-star-rating-component [rating]="averageRating" [playId]="play._id"></app-star-rating-component>
                         </div>
                     </div>
                 </div>
