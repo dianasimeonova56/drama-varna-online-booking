@@ -1,1 +1,36 @@
-<p>play-details works!</p>
+<div *ngIf="play$ | async as play; else loading">
+  <div class="play-item-details">
+    <div class="left-side">
+      <p>january</p>
+    </div>
+
+    <div class="container">
+      <div class="content-wrapper">
+        <div class="image">
+          <img loading="lazy" [src]="play.imageUrl" />
+        </div>
+
+        <div class="right-side">
+          <div class="logo">
+            <img src="logo.png" />
+          </div>
+          <div class="top-row">
+            <div class="date-box">25</div>
+            <div class="scene-time">{{ play.place }} - 19:00</div>
+            <!-- <div class="scene-time" [routerLink]="['/plays', play._id]">Details</div> -->
+          </div>
+
+          <div class="title">{{ play.playName }}</div>
+
+          <div class="info">
+            <p>Режисьор: <br />{{ play.director[0] }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <p>Loading...</p>
+</ng-template>
