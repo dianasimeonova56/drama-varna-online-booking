@@ -8,6 +8,7 @@ import { Play } from "../../models/play.model";
 })
 
 export class PlaysService {
+    // TODO : polish calling apiURL for different routes
     private apiUrlForLatest = 'http://localhost:3000/api/plays/get-latest-plays?limit={0}';
     private apiUrl = 'http://localhost:3000/api/plays';
 

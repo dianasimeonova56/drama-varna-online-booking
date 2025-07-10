@@ -17,8 +17,5 @@ export class HomeRecentPlays {
 
   constructor(private playsService: PlaysService) {
     this.play$ = this.playsService.getLatestPlays();
-    // this.play$ = this.playsService.getPlays();
-    // console.log(this.play$);
-    
   }
 }
