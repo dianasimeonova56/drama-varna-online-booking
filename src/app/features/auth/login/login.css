@@ -1,0 +1,69 @@
+.login-container {
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  font-family: sans-serif;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+input {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+input:focus {
+  border-color: #cd2122;
+  outline: none;
+}
+
+button {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1rem;
+  background: #cd2122;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:disabled {
+  background: #cd2122;
+  cursor: not-allowed;
+}
+
+.error {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 0.3rem;
+}
+
+.error-message {
+  margin-top: 1rem;
+  color: #d8000c;
+  background: #ffd2d2;
+  padding: 0.6rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
