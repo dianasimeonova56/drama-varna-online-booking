@@ -6,14 +6,23 @@
         <nav>
             <ul>
                 <li>
-                    <a routerLink="/"  routerLinkActive="active" >Home</a>
+                    <a routerLink="/" routerLinkActive="active">Home</a>
+                </li>
+                @if(isLoggedIn()) {
+                <li>
+                    <a routerLink="/plays" routerLinkActive="active">Plays</a>
                 </li>
                 <li>
-                    <a routerLink="/plays"  routerLinkActive="active" >Plays</a>
+                    <a routerLink="/profile" routerLinkActive="active">My Profile</a>
                 </li>
                 <li>
-                    <a routerLink="/login"  routerLinkActive="active" >Login</a>
+                    <a routerLink="/logout" routerLinkActive="active" (click)="logout()">Logout</a>
                 </li>
+                } @else {
+                <li>
+                    <a routerLink="/login" routerLinkActive="active">Login</a>
+                </li>
+                }
             </ul>
         </nav>
     </div>
