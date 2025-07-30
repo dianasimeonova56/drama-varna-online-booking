@@ -1,4 +1,5 @@
 <div id="container">
+    
     <fa-icon 
     [class.rated]="rating >= 5" 
     [icon]="faStar" 
@@ -21,3 +22,6 @@
     (click)="setRating(1)"></fa-icon>
 </div>
 <p>{{this.rating}} / 5</p>
+@if(hasRated) {
+    <p> Thank you for your rating!</p>
+}

@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { NotFound } from './shared/components/index';
 
 export const routes: Routes = [
      {
@@ -14,5 +15,14 @@ export const routes: Routes = [
           path: 'plays/:playId',
           loadComponent: () => import('./features/play/play-details/play-details')
                .then(m => m.PlayDetailsComponent)
-     }
+     },
+     {
+        path: 'logout',
+        redirectTo: '/home',
+        pathMatch: 'full'
+    },
+    {
+        path: '**',
+        component: NotFound
+    }
 ];

@@ -90,10 +90,7 @@ async function addRating(req, res, next) {
 
      try {
         const play = await playModel.findById(playId);
-        console.log(play);
         
-        
-
         if (!play) {
             return res.status(404).json({ message: 'Play not found' });
         }
@@ -107,7 +104,9 @@ async function addRating(req, res, next) {
         //}
 
         const total = play.ratings.reduce((sum, r) => sum + r.rating, 0);
-        play.averageRating = total / play.ratings.length;
+        play.averageRating = (total / play.ratings.length).toFixed(2);
+        console.log(play.averageRating);
+        
 
         await play.save();
 

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, signal } from '@angular/core';
 import { Play } from '../../../models';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { PlaysService } from '../../../core/services/plays.service';
@@ -15,11 +15,11 @@ import { StarRatingComponent } from "../../../shared/components";
 })
 export class PlayDetailsComponent {
   @Input() play$!: Observable<Play>;
-  averageRating!: number;
+  averageRating = signal(0);
 
   //spinner?
   constructor(private route: ActivatedRoute,
-    private playsService: PlaysService) {}
+    private playsService: PlaysService) { }
 
   ngOnInit(): void {
     const playId = this.route.snapshot.paramMap.get('playId');
@@ -31,12 +31,16 @@ export class PlayDetailsComponent {
       next: (play) => {
         if (play.ratings && play.ratings.length > 0) {
           const total = play.ratings.reduce((sum, r) => sum + r.rating, 0);
-          this.averageRating = total / play.ratings.length;
+          this.averageRating.set(Number((total / play.ratings.length).toFixed(2)));
         } else {
-          this.averageRating = 0;
+          this.averageRating.set(0)
         }
       },
       error: (err) => console.error('Failed to load play', err)
     });
+  }
+
+  onRatingUpdate(newAverage: number): void {
+    this.averageRating.set(newAverage);
   }
 }

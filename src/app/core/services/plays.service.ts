@@ -28,8 +28,6 @@ export class PlaysService {
     }
 
     addRating(playId: string, rating: number) {
-        console.log(this.apiUrl + `/${playId}/add-rating`);
-        
-        return this.httpClient.patch<Play>(this.apiUrl + `/${playId}/add-rating`, {rating})
+        return this.httpClient.patch<{ message: string, averageRating: number }>(this.apiUrl + `/${playId}/add-rating`, {rating})
     }
 }

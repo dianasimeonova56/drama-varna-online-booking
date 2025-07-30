@@ -27,7 +27,11 @@
                             <p>Duration: <br /></p>
                             <p>Actors: <br /></p>
                             <p>Average Rating: <br /></p>
-                            <app-star-rating-component [rating]="averageRating" [playId]="play._id"></app-star-rating-component>
+                            <app-star-rating-component 
+                            [rating]="averageRating()" 
+                            [playId]="play._id"
+                            (ratingUpdated)="onRatingUpdate($event)"
+                            ></app-star-rating-component>
                         </div>
                     </div>
                 </div>
