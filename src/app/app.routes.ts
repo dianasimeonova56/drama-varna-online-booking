@@ -24,6 +24,11 @@ export const routes: Routes = [
           canActivate: [guestGuard]
      },
      {
+          path: 'plays',
+          loadComponent: () => import('./features/play/plays-component/plays-component')
+               .then(m => m.PlaysComponent)
+     },
+     {
           path: 'plays/:playId',
           loadComponent: () => import('./features/play/play-details/play-details')
                .then(m => m.PlayDetailsComponent),
