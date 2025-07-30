@@ -1,0 +1,45 @@
+<div class="auth-container">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <h2>Register</h2>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input id="email" type="email" formControlName="email" />
+            @if(isEmailValid) {
+            <p class="error">
+                {{ emailErrorMessage }}
+            </p>
+            }
+            <label for="username">Username</label>
+            <input id="username" type="text" formControlName="username" />
+            @if(isUsernameValid) {
+            <p class="error">
+                {{ usernameErrorMessage }}
+            </p>
+            }
+
+            <div [formGroup]="passwords" class="form-group">
+                <label for="password">Password</label>
+                <input id="password" type="password" formControlName="password" />
+                @if(isPasswordsValid) {
+                <p class="error">
+                    {{ passwordErrorMessage }}
+                </p>
+                }
+
+                <label for="rePassword">Confirm Password</label>
+                <input id="rePassword" type="password" formControlName="rePassword" />
+                @if(isPasswordsValid) {
+                <p class="error">
+                    {{ rePasswordErrorMessage }}
+                </p>
+                }
+            </div>
+        </div>
+        <button type="submit" [disabled]="registerForm.invalid">Register</button>
+    </form>
+    <p>
+        Have an account?
+        <a routerLink="/login" routerLinkActive="active">Log In</a>
+    </p>
+</div>

@@ -43,8 +43,8 @@ export class AuthService {
         return false;
     }
 
-    register(email: string, username: string, role: string, password: string, rePassword: string): boolean {
-        if (email &&username&& role && password && rePassword) {
+    register(email: string, username: string, password: string, rePassword: string, role: string): boolean {
+        if (email && username && role && password && rePassword) {
             //we send the pass and rePass ro backend to check
             const newUser: User = {
                 id: `user_${Date.now}`,
