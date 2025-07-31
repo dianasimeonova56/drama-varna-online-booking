@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { NotFound } from './shared/components/index';
 import { authGuard } from './core/guards/auth.guard';
 import { guestGuard } from './core/guards/guest.guard';
+import { roleGuard } from './core/guards';
 
 export const routes: Routes = [
      {
@@ -31,7 +32,16 @@ export const routes: Routes = [
      {
           path: 'plays/create',
           loadComponent: () => import('./features/play/create-play/create-play')
-               .then(m => m.CreatePlay)
+               .then(m => m.CreatePlay),
+          canActivate: [roleGuard, authGuard],
+          data: { roles: ['admin'] }
+     },
+     {
+          path: 'plays/edit/:playId',
+          loadComponent: () => import('./features/play/edit-play/edit-play')
+               .then(m => m.EditPlay),
+          canActivate: [roleGuard, authGuard],
+          data: { roles: ['admin'] }
      },
      {
           path: 'plays/:playId',

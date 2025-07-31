@@ -1,1 +1,49 @@
-<p>edit-play works!</p>
+<div class="auth-container">
+    <form [formGroup]="editPlayForm" (ngSubmit)="onSubmit()">
+        <h2>Edit Play</h2>
+
+        <div class="form-group">
+            <label for="email">Name</label>
+            <input id="playName" type="playName" formControlName="playName" />
+            @if(isPlayNameValid) {
+            <p class="error">
+                {{ playNameErrorMessage }}
+            </p>
+            }
+
+            <label for="director">Directors</label>
+            <input id="director" type="director" formControlName="director" />
+
+            <label for="description">Description</label>
+            <textarea id="description" formControlName="description"></textarea>
+            @if(isDescriptionValid) {
+            <p class="error">
+                {{ descriptionErrorMessage }}
+            </p>
+            }
+
+            <label for="imageUrl">Image</label>
+            <input id="imageUrl" type="text" formControlName="imageUrl" />
+            @if(isImageUrlValid) {
+            <p class="error">
+                {{ imageUrlErrorMessage }}
+            </p>
+            }
+
+            <label for="playDate">Date</label>
+            <input id="playDate" type="date" formControlName="playDate" />
+            
+
+            <label for="place">Place</label>
+            <select formControlName="place" >
+                <option selected>Choose place for play</option>
+                <option>Main Stage</option>
+                <option>Secondary stage</option>
+                <option>Opera</option>
+            </select>
+
+        </div>
+
+        <button type="submit" [disabled]="editPlayForm.invalid">Edit</button>
+    </form>
+</div>

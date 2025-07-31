@@ -16,6 +16,7 @@ export class HomeRecentPlays {
   play$: Observable<Play[]>;
 
   constructor(private playsService: PlaysService) {
-    this.play$ = this.playsService.getLatestPlays();
+    this.play$ = this.playsService.plays$;
+    this.playsService.getLatestPlays(2).subscribe();
   }
 }

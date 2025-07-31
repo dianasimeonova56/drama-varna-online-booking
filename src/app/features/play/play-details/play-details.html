@@ -16,22 +16,22 @@
                         <div class="top-row">
                             <div class="date-box">25</div>
                             <div class="scene-time">{{ play.place }} - 19:00</div>
-                            <!-- <div class="scene-time" [routerLink]="['/plays', play._id]">Details</div> -->
+                            @if(this.role=='admin') {
+                            <div class="scene-time" [routerLink]="['/plays/edit', play._id]">Edit</div>
+                            <div class="scene-time" (click)="deletePlay(play._id)">Delete</div>
+                            }
                         </div>
 
                         <div class="title">{{ play.playName }}</div>
 
                         <div class="info">
-                            <p>Director: <br />{{ play.director[0] }}</p>
+                            <p>Director: <br />{{ play.director }}</p>
                             <p>Description: <br />{{ play.description }}</p>
                             <p>Duration: <br /></p>
                             <p>Actors: <br /></p>
                             <p>Average Rating: <br /></p>
-                            <app-star-rating-component 
-                            [rating]="averageRating()" 
-                            [playId]="play._id"
-                            (ratingUpdated)="onRatingUpdate($event)"
-                            ></app-star-rating-component>
+                            <app-star-rating-component [rating]="averageRating()" [playId]="play._id"
+                                (ratingUpdated)="onRatingUpdate($event)"></app-star-rating-component>
                         </div>
                     </div>
                 </div>

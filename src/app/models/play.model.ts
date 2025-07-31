@@ -5,7 +5,7 @@ export interface Play {
     director: Array<string>;
     playName: string;
     description: string;
-    date: string;
+    playDate: string;
     place: string;
     imageUrl: string;
     //cast - collection of actors

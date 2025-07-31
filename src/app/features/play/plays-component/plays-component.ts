@@ -16,6 +16,7 @@ export class PlaysComponent {
   plays$: Observable<Play[]>;
   
   constructor(private playsService: PlaysService) {
-    this.plays$ = this.playsService.getPlays();
+    this.plays$ = this.playsService.plays$;
+    this.playsService.getPlays().subscribe()
   }
 }

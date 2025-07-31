@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, Input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input, signal } from '@angular/core';
 import { Play } from '../../../models';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { PlaysService } from '../../../core/services/plays.service';
 import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { StarRatingComponent } from "../../../shared/components";
+import { AuthService } from '../../../core/services';
 
 @Component({
   selector: 'app-play-details',
@@ -16,10 +17,14 @@ import { StarRatingComponent } from "../../../shared/components";
 export class PlayDetailsComponent {
   @Input() play$!: Observable<Play>;
   averageRating = signal(0);
+  protected authService = inject(AuthService);
+  protected playsService = inject(PlaysService);
+  protected router = inject(Router);
+  protected role = this.authService.getCurrentUserRole();
 
   //spinner?
-  constructor(private route: ActivatedRoute,
-    private playsService: PlaysService) { }
+  constructor(private route: ActivatedRoute) { }
+
 
   ngOnInit(): void {
     const playId = this.route.snapshot.paramMap.get('playId');
@@ -42,5 +47,11 @@ export class PlayDetailsComponent {
 
   onRatingUpdate(newAverage: number): void {
     this.averageRating.set(newAverage);
+  }
+
+  deletePlay(playId: string): void {
+    this.playsService.deletePlay(playId).subscribe(() => {
+      this.router.navigate(['/plays']);
+    });
   }
 }
