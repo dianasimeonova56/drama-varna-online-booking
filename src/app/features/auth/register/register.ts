@@ -26,11 +26,7 @@ export class Register {
       }, { validators: this.passwordMatchValidator })
     })
   }
-
-  ngAfterViewInit(): void {
-    console.dir(this.registerForm);
-  }
-
+  
   get username(): AbstractControl<any, any> | null {
     return this.registerForm.get('username');
   }

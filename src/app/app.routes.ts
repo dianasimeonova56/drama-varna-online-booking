@@ -29,6 +29,11 @@ export const routes: Routes = [
                .then(m => m.PlaysComponent)
      },
      {
+          path: 'plays/create',
+          loadComponent: () => import('./features/play/create-play/create-play')
+               .then(m => m.CreatePlay)
+     },
+     {
           path: 'plays/:playId',
           loadComponent: () => import('./features/play/play-details/play-details')
                .then(m => m.PlayDetailsComponent),

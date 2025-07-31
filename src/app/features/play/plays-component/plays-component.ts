@@ -4,6 +4,7 @@ import { Play } from '../../../models';
 import { PlaysService } from '../../../core/services/plays.service';
 import { CommonModule } from '@angular/common';
 import { PlayItem } from '../../../shared/components';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-plays-component',

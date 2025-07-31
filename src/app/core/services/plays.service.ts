@@ -13,10 +13,10 @@ export class PlaysService {
     // private apiUrlForLatest = 'http://localhost:3000/api';
     private apiUrl = 'http://localhost:3000/api/plays';
 
-    constructor(private httpClient:HttpClient) {}
+    constructor(private httpClient: HttpClient) { }
 
     getLatestPlays(limit: number = 1): Observable<Play[]> {
-        return this.httpClient.get<Play[]>(this.apiUrl + '/get-latest-plays?limit={0}'.replace('{0}', limit.toString()) )
+        return this.httpClient.get<Play[]>(this.apiUrl + '/get-latest-plays?limit={0}'.replace('{0}', limit.toString()))
     }
 
     getPlays(): Observable<Play[]> {
@@ -27,7 +27,12 @@ export class PlaysService {
         return this.httpClient.get<Play>(this.apiUrl + `/${playId}`);
     }
 
+    createPlay(body: Play): Observable<Play> {
+        debugger
+       return this.httpClient.post<Play>(this.apiUrl + '/createPlay', { body })
+    }
+
     addRating(playId: string, rating: number) {
-        return this.httpClient.patch<{ message: string, averageRating: number }>(this.apiUrl + `/${playId}/add-rating`, {rating})
+        return this.httpClient.patch<{ message: string, averageRating: number }>(this.apiUrl + `/${playId}/add-rating`, { rating })
     }
 }
