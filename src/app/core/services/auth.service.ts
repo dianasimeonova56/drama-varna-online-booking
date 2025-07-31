@@ -1,5 +1,7 @@
 import { Injectable, signal } from "@angular/core";
 import { User } from "../../models";
+import { HttpClient } from "@angular/common/http";
+import { Observable, tap } from "rxjs";
 
 @Injectable({
     providedIn: 'root' // we can inject it in the project] we can create instance of it 
@@ -8,18 +10,14 @@ import { User } from "../../models";
 
 export class AuthService {
     //encapsulation for the service
+    private apiUrl = 'http://localhost:3000/api'
     private _isLoggedIn = signal<boolean>(false); //only the service can access the signals
     private _currentUser = signal<User | null>(null);
-    private _users: User[] = [
-        { id: '5fa64a072183ce1728ff3719', email: 'john.doe@gmail.com', username: "David", role: "Admin"  },
-        { id: '5fa64b162183ce1728ff371d', email: 'john.dolly@gmail.com', username: "Angel", role: "Admin"   },
-        { id: '5fa64b972183ce1728ff3720', email: 'john.felt@gmail.com', username: "Nicky", role: "User"   },
-    ]
 
     public isLoggedIn = this._isLoggedIn.asReadonly(); // componnets can only READ it cant modify it 
     public currentUser = this._currentUser.asReadonly();
 
-    constructor() {
+    constructor(private httpClient: HttpClient) {
         const savedUser = localStorage.getItem('currentUser') // check if user exists
         if (savedUser) {
             const user: User = JSON.parse(savedUser);
@@ -29,67 +27,68 @@ export class AuthService {
     }
 
 
-    login(email: string, password: string): boolean {
-        if (email && password) {
-            const user = this._users[0];
-            this._currentUser.set(user);
-            this._isLoggedIn.set(true);
-
-            localStorage.setItem('currentUser', JSON.stringify(user));
-
-            return true;
-        }
-
-        return false;
+    login(email: string, password: string): Observable<User> {
+        return this.httpClient.post<User>(`${this.apiUrl}/login`, { email, password }, {
+            withCredentials: true
+        }).pipe(
+            tap(user => {
+                this._currentUser.set(user);
+                this._isLoggedIn.set(true);
+                localStorage.setItem('currentUser', JSON.stringify(user))
+            })
+        );
     }
 
-    register(email: string, username: string, password: string, rePassword: string, role: string): boolean {
-        if (email && username && role && password && rePassword) {
-            //we send the pass and rePass ro backend to check
-            const newUser: User = {
-                id: `user_${Date.now}`,
-                email,
-                username,
-                role
-            }
-            this._users.push(newUser);
-
-            this._currentUser.set(newUser);
-            this._isLoggedIn.set(true);
-
-
-            //it shpuld be a call to the backend
-            localStorage.setItem('currentUser', JSON.stringify(newUser))
-
-            return true;
-
-        }
-        return false;
+    register(email: string, username: string, password: string, rePassword: string): Observable<User> {
+        return this.httpClient.post<User>(`${this.apiUrl}/register`, {
+            username,
+            email,
+            password,
+            rePassword
+        }, {
+            withCredentials: true
+        }).pipe(
+            tap(user => {
+                this._currentUser.set(user);
+                this._isLoggedIn.set(true);
+                localStorage.setItem('currentUser', JSON.stringify(user))
+            })
+        );
     }
 
-    logout(): void {
-        this._currentUser.set(null);
-        this._isLoggedIn.set(false);
-
-        localStorage.removeItem('currentUser');
+    logout(): Observable<void> {
+        return this.httpClient.post<void>(`${this.apiUrl}/logout`, {}, {
+            withCredentials: true
+        }).pipe(
+            tap(() => {
+                this._currentUser.set(null);
+                this._isLoggedIn.set(false);
+                localStorage.removeItem('currentUser')
+            })
+        );
     }
 
     getCurrentUserId(): string | null {
         return this._currentUser()?.id || null
     }
 
-    updateUser(user: User): void {
-        const userIndex = this._users.findIndex(u => u.id === user.id);
-
-        if (userIndex !== -1) {
-            this._users[userIndex] = user;
-             console.log(this._users[userIndex]);
-        }
-       
-        
-
-        this._currentUser.set(user);
-
-        localStorage.setItem('currentUser', JSON.stringify(user));
+    updateUser(user: User): Observable<User> {
+        return this.httpClient.put<User>(`${this.apiUrl}/users/${user.id}`, {
+            _id: user.id,
+            username: user.username,
+            email: user.email,
+        }, {
+            withCredentials: true
+        }).pipe(
+            tap(user => {
+                this._currentUser.set(user);
+                this._isLoggedIn.set(true);
+                localStorage.setItem('currentUser', JSON.stringify(user))
+            })
+        );
+    }
+    
+    getToken(): string {
+        return 'FAKE_TOKEN=12345'
     }
 }

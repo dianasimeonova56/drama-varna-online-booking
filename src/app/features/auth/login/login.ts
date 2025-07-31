@@ -30,7 +30,7 @@ export class Login {
   get password(): AbstractControl<any, any> | null {
     return this.loginForm.get('passwrod')
   }
-   get isEmailValid(): boolean {
+  get isEmailValid(): boolean {
     return this.email?.invalid && (this.email?.dirty || this.email?.touched) || false;
   }
 
@@ -65,14 +65,16 @@ export class Login {
   onSubmit(): void {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
+      this.authService.login(email, password).subscribe({
+        next: () => {
+          this.router.navigate(['/home']);
+        },
+        error: (err) => {
+          console.log("Login failed", err);
 
-      const response = this.authService.login(email, password);
-
-      if (response === true) {
-        this.router.navigate(['/home']);
-      } else {
-        this.markFormGroupTouched();
-      }
+          this.markFormGroupTouched();
+        }
+      })
     }
   }
 

@@ -26,7 +26,7 @@ export class Register {
       }, { validators: this.passwordMatchValidator })
     })
   }
-  
+
   get username(): AbstractControl<any, any> | null {
     return this.registerForm.get('username');
   }
@@ -127,22 +127,18 @@ export class Register {
     if (this.registerForm.valid) {
       const { username, email } = this.registerForm.value;
       const { password, rePassword } = this.registerForm.value.passwords;
-      const role = "user"
+      // const role = "user"
 
-      console.log(username);
-
-      const response = this.authService.register(
-        email,
-        username,
-        password,
-        rePassword,
-        role);
-
-      if (response === true) {
-        this.router.navigate(['/home']);
-      } else {
-        this.markFormGroupTouched();
-      }
+      this.authService.register(username,
+        email, password, rePassword).subscribe({
+          next: () => {
+            this.router.navigate(['/home']);
+          },
+          error: (err) => {
+            console.log("Registration failed", err);
+            this.markFormGroupTouched();
+          }
+        });
     }
   }
 
