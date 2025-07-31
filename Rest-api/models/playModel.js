@@ -10,8 +10,8 @@ const playSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    date: {
-        type: Date,
+    playDate: {
+        type: String,
         required: true
     },
     place: {
@@ -23,9 +23,9 @@ const playSchema = new mongoose.Schema({
         required: true,
         validate: [/^https?:\/\//, 'Invalid image url!']
     },
-    director: [{
+    director: {
         type: String,
-    }],
+    },
     ratings: [{
         user: {
             type: ObjectId,

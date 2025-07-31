@@ -44,10 +44,7 @@ function getPlay(req, res, next) {
 }
 
 function createPlay(req, res, next) {
-
     const { playData } = req.body;
-    console.log(playData);
-    
 
     newPlay(playData)
         .then(createdPlay => res.status(200).json(createdPlay))

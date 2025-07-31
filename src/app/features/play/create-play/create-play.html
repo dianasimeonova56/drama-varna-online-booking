@@ -1,6 +1,6 @@
 <div class="auth-container">
     <form [formGroup]="createPlayForm" (ngSubmit)="onSubmit()">
-        <h2>Register</h2>
+        <h2>Create Play</h2>
 
         <div class="form-group">
             <label for="email">Name</label>
@@ -10,7 +10,11 @@
                 {{ playNameErrorMessage }}
             </p>
             }
-            <label for="username">Description</label>
+
+            <label for="director">Directors</label>
+            <input id="director" type="director" formControlName="director" />
+
+            <label for="description">Description</label>
             <textarea id="description" formControlName="description"></textarea>
             @if(isDescriptionValid) {
             <p class="error">
@@ -42,8 +46,4 @@
 
         <button type="submit" [disabled]="createPlayForm.invalid">Create</button>
     </form>
-    <p>
-        Have an account?
-        <a routerLink="/login" routerLinkActive="active">Log In</a>
-    </p>
 </div>

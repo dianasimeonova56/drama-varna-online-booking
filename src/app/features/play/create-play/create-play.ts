@@ -18,26 +18,24 @@ export class CreatePlay {
 
   createPlayForm: FormGroup;
 
-  //director - array
-  // playName
-  // description
-  // date
-  // imageUrl
-  // ratings
-  // place
   constructor() {
     this.createPlayForm = this.formBuilder.group({
       playName: ['', [Validators.required, Validators.minLength(5)]],
+      director: [''],
       description: ['', [Validators.required, Validators.minLength(25)]],
       imageUrl: ['', [Validators.required, Validators.pattern(/^https?:\/\//)]],
       playDate: ['', [Validators.required]],
       place: ['', [Validators.required]]
     },
-  {validators:this.minDateValidator})
+      { validators: this.minDateValidator })
   }
 
   get playName(): AbstractControl<any, any> | null {
     return this.createPlayForm.get('playName');
+  }
+
+  get director(): AbstractControl<any, any> | null {
+    return this.createPlayForm.get('director');
   }
 
   get description(): AbstractControl<any, any> | null {
@@ -113,15 +111,19 @@ export class CreatePlay {
 
   onSubmit(): void {
     if (this.createPlayForm.valid) {
-      const body  = this.createPlayForm.value;
+      const body = this.createPlayForm.value;
+      console.log(body);
+      
 
-      const response = this.playsService.createPlay(body);
-
-      if (response) {
-        this.router.navigate(['/plays']);
-      } else {
-        this.markFormGroupTouched();
-      }
+      this.playsService.createPlay(body).subscribe({
+        next: () => {
+          this.router.navigate(['/plays']);
+        },
+        error: (err) => {
+          console.error('Failed to create play:', err);
+          this.markFormGroupTouched();
+        }
+      });
     }
   }
 
@@ -141,13 +143,13 @@ export class CreatePlay {
 
   //TODO
   private minDateValidator(playDate: AbstractControl): ValidationErrors | null {
-    
-    const date = playDate.value; 
+
+    const date = playDate.value;
     const currentDate = new Date();
-    if(date < currentDate) {
+    if (date < currentDate) {
       console.log('invalid date', date, currentDate);
-      
-      return {invalidDate: true}
+
+      return { invalidDate: true }
     }
     return null;
   }
