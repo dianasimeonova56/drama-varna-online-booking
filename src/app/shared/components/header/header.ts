@@ -15,6 +15,8 @@ export class Header {
   readonly isLoggedIn = this.authService.isLoggedIn;
   readonly currentUser = this.authService.currentUser;
 
+  protected role = this.authService.getCurrentUserRole();
+
   logout(): void {
     this.authService.logout().subscribe({
       next: () => {

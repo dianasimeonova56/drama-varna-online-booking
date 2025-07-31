@@ -32,6 +32,7 @@ export class AuthService {
             withCredentials: true
         }).pipe(
             tap(user => {
+                console.log(user);
                 this._currentUser.set(user);
                 this._isLoggedIn.set(true);
                 localStorage.setItem('currentUser', JSON.stringify(user))
@@ -44,7 +45,8 @@ export class AuthService {
             username,
             email,
             password,
-            rePassword
+            rePassword,
+            role: 'user'
         }, {
             withCredentials: true
         }).pipe(
@@ -90,5 +92,9 @@ export class AuthService {
     
     getToken(): string {
         return 'FAKE_TOKEN=12345'
+    }
+
+    getCurrentUserRole(): string | null {
+        return this._currentUser()?.role || null;
     }
 }

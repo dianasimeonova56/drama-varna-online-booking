@@ -129,8 +129,8 @@ export class Register {
       const { password, rePassword } = this.registerForm.value.passwords;
       // const role = "user"
 
-      this.authService.register(username,
-        email, password, rePassword).subscribe({
+      this.authService.register(email,
+        username, password, rePassword).subscribe({
           next: () => {
             this.router.navigate(['/home']);
           },

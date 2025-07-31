@@ -18,7 +18,7 @@ export class Login {
 
   constructor() {
     this.loginForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.pattern(/^(?=.{6,})[a-zA-Z][a-zA-Z0-9._-]*@gmail\.(com|bg)$/)]],
+      email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
       password: ['', [Validators.required, Validators.minLength(5)]]
     })
   };
@@ -28,7 +28,7 @@ export class Login {
   }
 
   get password(): AbstractControl<any, any> | null {
-    return this.loginForm.get('passwrod')
+    return this.loginForm.get('password')
   }
   get isEmailValid(): boolean {
     return this.email?.invalid && (this.email?.dirty || this.email?.touched) || false;
@@ -65,6 +65,8 @@ export class Login {
   onSubmit(): void {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
+      console.log(email, password);
+      
       this.authService.login(email, password).subscribe({
         next: () => {
           this.router.navigate(['/home']);

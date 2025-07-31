@@ -13,9 +13,11 @@ const removePassword = (data) => {
 }
 
 function register(req, res, next) {
-    const { tel, email, username, password, repeatPassword } = req.body;
+    const { email, username, password, repeatPassword, role } = req.body;
+    console.log(role);
 
-    return userModel.create({ tel, email, username, password })
+
+    return userModel.create({ email, username, password, role })
         .then((createdUser) => {
             createdUser = bsonToJson(createdUser);
             createdUser = removePassword(createdUser);
@@ -44,32 +46,52 @@ function register(req, res, next) {
 }
 
 function login(req, res, next) {
-    const { email, password } = req.body;
+    let { email, password } = req.body;
+
+    // Normalize email
+    email = email.trim().toLowerCase();
+
+    console.log('Received credentials:', email, password);
 
     userModel.findOne({ email })
         .then(user => {
-            return Promise.all([user, user ? user.matchPassword(password) : false]);
+            if (!user) {
+                console.log('User not found');
+                return Promise.resolve([null, false]);
+            }
+
+            // Log matched user
+            console.log('User found:', user.email);
+
+            return Promise.all([user, user.matchPassword(password)]);
         })
         .then(([user, match]) => {
             if (!match) {
-                res.status(401)
-                    .send({ message: 'Wrong email or password' });
-                return
+                console.log('Password does not match');
+                return res.status(401).send({ message: 'Wrong email or password' });
             }
+
+            // Remove sensitive fields
             user = bsonToJson(user);
             user = removePassword(user);
 
-            const token = utils.jwt.createToken({ id: user._id });
+            const token = utils.jwt.createToken({ id: user._id, role: user.role });
 
             if (process.env.NODE_ENV === 'production') {
-                res.cookie(authCookieName, token, { httpOnly: true, sameSite: 'none', secure: true })
+                res.cookie(authCookieName, token, { httpOnly: true, sameSite: 'none', secure: true });
             } else {
-                res.cookie(authCookieName, token, { httpOnly: true })
+                res.cookie(authCookieName, token, { httpOnly: true });
             }
-            res.status(200)
-                .send(user);
+
+            return res.status(200).send({
+                ...user,
+                token,
+            });
         })
-        .catch(next);
+        .catch(err => {
+            console.error('Login error:', err);
+            next(err);
+        });
 }
 
 function logout(req, res) {
