@@ -31,7 +31,11 @@
             }
 
             <label for="playDate">Date</label>
-            <input id="playDate" type="date" formControlName="playDate" />
+            <input id="playDate" 
+            type="datetime-local"
+            min="2018-06-07T00:00" 
+            max="2026-01-01T00:00"
+            formControlName="playDate" />
             
 
             <label for="place">Place</label>
