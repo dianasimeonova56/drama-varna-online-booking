@@ -25,10 +25,9 @@ export class EditPlay {
       director: [''],
       description: ['', [Validators.required, Validators.minLength(25)]],
       imageUrl: ['', [Validators.required, Validators.pattern(/^https?:\/\//)]],
-      playDate: ['', [Validators.required]],
+      playDate: ['', [Validators.required, this.minDateValidator, this.timeRangeValidator]],
       place: ['', [Validators.required]]
-    },
-      { validators: this.minDateValidator })
+    })
 
     this.playId = this.route.snapshot.paramMap.get('playId');
 
@@ -130,6 +129,9 @@ export class EditPlay {
     if (this.playDate?.errors?.['invalidDate']) {
       return 'Play Date should be before the current date!';
     }
+    if (this.playDate?.errors?.['invalidTime']) {
+      return 'Play Date Time should be between 10:00 and 20:00!';
+    }
     return '';
   }
   onSubmit(): void {
@@ -150,14 +152,31 @@ export class EditPlay {
     });
   }
 
-  private minDateValidator(playDate: AbstractControl): ValidationErrors | null {
+  timeRangeValidator(control: AbstractControl): ValidationErrors | null {
+    if (!control.value) {
+      return null;
+    }
 
-    const date = playDate.value;
+    const date = new Date(control.value);
+    const hour = date.getHours();
+
+    if (hour < 10 || hour > 20) {
+      return { invalidTime: true };
+    }
+
+    return null;
+  }
+
+  //TODO
+  private minDateValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    if (!value) return null;
+
+    const date = new Date(value);
     const currentDate = new Date();
-    if (date < currentDate) {
-      console.log('invalid date', date, currentDate);
 
-      return { invalidDate: true }
+    if (date < currentDate) {
+      return { invalidDate: true };
     }
     return null;
   }
