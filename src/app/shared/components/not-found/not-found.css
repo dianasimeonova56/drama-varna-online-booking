@@ -1,0 +1,16 @@
+.errimg {
+    height: 350px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: auto;
+    position: relative;
+}
+
+.err {
+    text-align: center;
+    font-size: 25px;
+}
+.err a {
+    color: #cd2122;
+}
