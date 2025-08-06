@@ -31,23 +31,27 @@ function getBooking(req, res, next) {
 }
 
 async function createBooking(req, res, next) {
-    const { bookingData } = req.body;
+  const { bookingData } = req.body;
 
-    try {
-        const play = await playModel.findById(bookingData.playId);
-        if (!play) {
-            return res.status(404).json({ message: 'Play not found' });
-        }
-
-        if (new Date(play.date) < new Date()) {
-            return res.status(400).json({ message: 'Cannot book past plays' });
-        }
-
-        const createdBooking = await newBooking(bookingData);
-        res.status(201).json(createdBooking);
-    } catch (err) {
-        next(err);
+  try {
+    const play = await playModel.findById(bookingData.playId);
+    if (!play) {
+      return res.status(404).json({ message: 'Play not found' });
     }
+
+    if (new Date(play.date) < new Date()) {
+      return res.status(400).json({ message: 'Cannot book past plays' });
+    }
+
+    const createdBooking = await newBooking(bookingData);
+
+    // Generate tickets AFTER booking is created
+    const tickets = await generateTicketsForBooking(createdBooking);
+
+    res.status(201).json({ booking: createdBooking, tickets });
+  } catch (err) {
+    next(err);
+  }
 }
 
 function editBooking(req, res, next) {

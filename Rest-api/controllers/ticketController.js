@@ -21,6 +21,37 @@ function getTicket(req, res, next) {
         .catch(next);
 }
 
+async function generateTicketsForBooking(req, res, next) {
+  const { bookingId } = req.params;
+
+  try {
+    const booking = await Booking.findById(bookingId);
+    if (!booking) {
+      return res.status(404).json({ message: 'Booking not found' });
+    }
+
+    const ticketsToCreate = [];
+
+    for (let i = 1; i <= booking.seats; i++) {
+      ticketsToCreate.push({
+        bookingId: booking._id,
+        userId: booking.userId,
+        playId: booking.playId,
+        seatNumber: `Seat-${i}`,
+        status: 'active',
+        issuedAt: new Date()
+      });
+    }
+
+    const tickets = await ticketModel.insertMany(ticketsToCreate);
+
+    res.status(201).json(tickets);
+
+  } catch (err) {
+    next(err);
+  }
+}
+
 function createTicket(req, res, next) {
     const { ticketData } = req.body;
     const { _id: userId } = req.user;
@@ -55,7 +86,7 @@ function deleteTicket(req, res, next) {
             if (deletedTicket) {
                 res.status(200).json(deletedTicket);
             } else {
-                res.status(404).json({ message: 'Play not found' });
+                res.status(404).json({ message: 'Ticket not found' });
             }
         })
         .catch(next);
@@ -64,6 +95,7 @@ function deleteTicket(req, res, next) {
 module.exports = {
     getTickets,
     getTicket,
+    generateTicketsForBooking,
     createTicket,
     editTicket,
     deleteTicket
