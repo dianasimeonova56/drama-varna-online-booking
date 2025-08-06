@@ -32,7 +32,7 @@ export class PlaysService {
             );
     }
 
-    getPlay(playId: string): Observable<Play> {
+    getPlay(playId: string | null): Observable<Play> {
         return this.httpClient.get<Play>(`${this.apiUrl}/${playId}`).pipe(
             tap(play => this.selectedPlayBehaviourSubject.next(play))
         );

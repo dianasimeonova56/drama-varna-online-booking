@@ -50,6 +50,13 @@ export const routes: Routes = [
           canActivate: [authGuard]
      },
      {
+          path: 'book/:playId',
+          loadComponent: () => import('./features/booking/book-ticket/book-ticket')
+               .then(m => m.BookTicket),
+          canActivate: [authGuard, roleGuard],
+          data: { roles: ['user'] }
+     },
+     {
           path: 'logout',
           redirectTo: '/home',
           pathMatch: 'full'

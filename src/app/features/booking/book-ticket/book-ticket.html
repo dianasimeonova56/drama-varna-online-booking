@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="play-item">
+       <app-play-item [play]="play$ | async"></app-play-item>
+    </div>
+    
+
+    <div class="form-container">
+
+        <form [formGroup]="bookTicketForm" (ngSubmit)="onSubmit()">
+            <h2>Book Ticket for {{playName}}</h2>
+
+            <div class="form-group">
+                <label for="seats">Number of tickets</label>
+                <input id="seats" type="number" formControlName="seats" min="1" max="5"/>
+
+                <label for="seatNumbers">Seat numbers</label>
+                <input id="seatNumbers" formControlName="seatNumbers" />
+
+            </div>
+
+            <button type="submit" [disabled]="bookTicketForm.invalid">Book Ticket(s)</button>
+        </form>
+    </div>
+</div>

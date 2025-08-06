@@ -6,16 +6,17 @@ import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { StarRatingComponent } from "../../../shared/components";
 import { AuthService } from '../../../core/services';
+import { PlayDateFormatPipe } from "../../../shared/pipes/playDateFormat.pipe";
 
 @Component({
   selector: 'app-play-details',
-  imports: [RouterModule, CommonModule, StarRatingComponent],
+  imports: [RouterModule, CommonModule, StarRatingComponent, PlayDateFormatPipe],
   templateUrl: './play-details.html',
   styleUrl: './play-details.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlayDetailsComponent {
-  @Input() play$!: Observable<Play>;
+  @Input() play$!: Observable<Play|null>;
   averageRating = signal(0);
   protected authService = inject(AuthService);
   protected playsService = inject(PlaysService);
@@ -34,9 +35,9 @@ export class PlayDetailsComponent {
 
     this.play$.subscribe({
       next: (play) => {
-        if (play.ratings && play.ratings.length > 0) {
-          const total = play.ratings.reduce((sum, r) => sum + r.rating, 0);
-          this.averageRating.set(Number((total / play.ratings.length).toFixed(2)));
+        if (play?.ratings && play?.ratings.length > 0) {
+          const total = play?.ratings.reduce((sum, r) => sum + r.rating, 0);
+          this.averageRating.set(Number((total / play?.ratings.length).toFixed(2)));
         } else {
           this.averageRating.set(0)
         }

@@ -7,18 +7,21 @@
             <div class="details">
                 <div class="content-wrapper">
                     <div class="left-side">
-                        <p>january</p>
+                        <p>{{play.playDate | playDateFormat: 'month'}}</p>
                     </div>
                     <div class="right-side">
                         <div class="logo">
-                            <img src="logo.png" />
+                            <img src="images/logo.png" />
                         </div>
                         <div class="top-row">
-                            <div class="date-box">25</div>
-                            <div class="scene-time">{{ play.place }} - 19:00</div>
+                            <div class="date-box">{{play.playDate | playDateFormat: 'day'}}</div>
+                            <div class="scene-time">{{ play.place }} - {{play.playDate | playDateFormat: 'time'}}</div>
                             @if(this.role=='admin') {
                             <div class="scene-time" [routerLink]="['/plays/edit', play._id]">Edit</div>
                             <div class="scene-time" (click)="deletePlay(play._id)">Delete</div>
+                            }
+                            @if(this.role=='user') {
+                                <div class="scene-time" [routerLink]="['/book/', play._id]">Book Ticket</div>
                             }
                         </div>
 

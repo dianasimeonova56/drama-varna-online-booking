@@ -12,7 +12,7 @@ import { PlayDateFormatPipe } from '../../pipes'
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlayItem implements OnInit {
-  @Input() play!: Play;
+  @Input() play!: Play | null;
 
   ngOnInit(): void {
   }
