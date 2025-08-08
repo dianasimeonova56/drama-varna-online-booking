@@ -1,9 +1,10 @@
 export interface Ticket {
-    id: string;
+    _id: string;
     title: string;
     date: string;
-    location: string;
+    place: string;
     seat: string;
-    price: number;
-    // purchasedBy: string;
+    userId: string;
+    playId: string;
+    created_at: string;
 }

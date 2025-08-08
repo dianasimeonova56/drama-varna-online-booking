@@ -10,19 +10,11 @@ const ticketSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    location: {
+    place: {
         type: String,
         required: true
     },
     seat: {
-        type: String,
-        required: true
-    },
-    price: {
-        type: String,
-        required: true
-    },
-    paymentMethod: {
         type: String,
         required: true
     },
