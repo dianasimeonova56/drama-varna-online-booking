@@ -83,14 +83,14 @@ function deletePlay(req, res, next) {
 }
 
 async function addRating(req, res, next) {
-    const {playId} = req.params;
+    const { playId } = req.params;
     const { rating } = req.body;
     // const { _id: userId } = req.user;
-    
 
-     try {
+
+    try {
         const play = await playModel.findById(playId);
-        
+
         if (!play) {
             return res.status(404).json({ message: 'Play not found' });
         }
@@ -100,13 +100,13 @@ async function addRating(req, res, next) {
         // if (existingRating) {
         //     existingRating.rating = rating;
         // } else {
-            play.ratings.push({ user: "686e3a5899ccbc29fcf87ba5", rating });
+        play.ratings.push({ user: "686e3a5899ccbc29fcf87ba5", rating });
         //}
 
         const total = play.ratings.reduce((sum, r) => sum + r.rating, 0);
         play.averageRating = (total / play.ratings.length).toFixed(2);
         console.log(play.averageRating);
-        
+
 
         await play.save();
 
@@ -116,16 +116,6 @@ async function addRating(req, res, next) {
     }
 }
 
-// function like(req, res, next) {
-//     const { postId } = req.params;
-//     const { _id: userId } = req.user;
-
-//     console.log('like')
-
-//     postModel.updateOne({ _id: postId }, { $addToSet: { likes: userId } }, { new: true })
-//         .then(() => res.status(200).json({ message: 'Liked successful!' }))
-//         .catch(next)
-// }
 
 module.exports = {
     newPlay,

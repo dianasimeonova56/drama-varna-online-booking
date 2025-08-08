@@ -5,7 +5,6 @@ function newBooking(bookingData) {
 }
 
 function getBookings(req, res, next) {
-    // Optionally add filtering by user or play via query params if needed
     bookingModel.find()
         .populate('userId', 'username email')
         .populate('playId', 'playName date')
@@ -31,27 +30,33 @@ function getBooking(req, res, next) {
 }
 
 async function createBooking(req, res, next) {
-  const { bookingData } = req.body;
+    const { bookingData } = req.body;
 
-  try {
-    const play = await playModel.findById(bookingData.playId);
-    if (!play) {
-      return res.status(404).json({ message: 'Play not found' });
+    try {
+        const play = await playModel.findById(bookingData.playId);
+        if (!play) {
+            return res.status(404).json({ message: 'Play not found' });
+        }
+
+        if (new Date(play.date) < new Date()) {
+            return res.status(400).json({ message: 'Cannot book past plays' });
+        }
+
+        const availableSeats = await getAvailableSeats(bookingData.playId);
+
+        if (bookingData.seatsBooked > availableSeats) {
+            return res.status(400).json({ message: `Only ${availableSeats} seats available` });
+        }
+
+        const createdBooking = await newBooking(bookingData);
+
+        // Generate tickets AFTER booking is created
+        const tickets = await generateTicketsForBooking(createdBooking);
+
+        res.status(201).json({ booking: createdBooking, tickets });
+    } catch (err) {
+        next(err);
     }
-
-    if (new Date(play.date) < new Date()) {
-      return res.status(400).json({ message: 'Cannot book past plays' });
-    }
-
-    const createdBooking = await newBooking(bookingData);
-
-    // Generate tickets AFTER booking is created
-    const tickets = await generateTicketsForBooking(createdBooking);
-
-    res.status(201).json({ booking: createdBooking, tickets });
-  } catch (err) {
-    next(err);
-  }
 }
 
 function editBooking(req, res, next) {
@@ -89,5 +94,5 @@ module.exports = {
     getBookings,
     createBooking,
     editBooking,
-    deleteBooking,
+    deleteBooking
 };

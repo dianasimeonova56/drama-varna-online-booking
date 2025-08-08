@@ -12,7 +12,7 @@ import { PlaysService } from '../../../core/services/plays.service';
 })
 export class CreatePlay {
   private authService = inject(AuthService);
-  private playsService = inject(PlaysService)
+  private playsService = inject(PlaysService);
   private router = inject(Router);
   private formBuilder = inject(FormBuilder);
 
@@ -26,7 +26,7 @@ export class CreatePlay {
       imageUrl: ['', [Validators.required, Validators.pattern(/^https?:\/\//)]],
       playDate: ['', [Validators.required, this.minDateValidator, this.timeRangeValidator]],
       place: ['', [Validators.required]]
-    })
+    });
   }
 
   get playName(): AbstractControl<any, any> | null {
