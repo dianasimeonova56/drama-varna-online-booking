@@ -1,13 +1,12 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common'
-import { PlaysService } from '../../../core/services';
+import { AuthService, PlaysService } from '../../../core/services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
-import { Play } from '../../../models';
+import { Booking, Play } from '../../../models';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { PlayDetailsComponent } from "../../play/play-details/play-details";
-import { PlayDateFormatPipe } from "../../../shared/pipes/playDateFormat.pipe";
 import { PlayItem } from "../../../shared/components";
+import { BookingService } from '../../../core/services/booking.service';
 
 @Component({
   selector: 'app-book-ticket',
@@ -16,8 +15,9 @@ import { PlayItem } from "../../../shared/components";
   styleUrl: './book-ticket.css'
 })
 export class BookTicket {
-  // private authService = inject(AuthService);
-  private playsService = inject(PlaysService)
+  private authService = inject(AuthService);
+  private playsService = inject(PlaysService);
+  private bookingService = inject(BookingService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private formBuilder = inject(FormBuilder);
@@ -29,10 +29,12 @@ export class BookTicket {
   playSubject = new BehaviorSubject<Play | null>(null);
   play$: Observable<Play | null>;
 
+  readonly currentUser = this.authService.currentUser;
+
   constructor() {
     this.bookTicketForm = this.formBuilder.group({
       seats: ['', [Validators.required, Validators.min(1)]],
-      seatNumbers: [''],
+      // seatNumbers: [''],
     })
 
     this.playId = this.route.snapshot.paramMap.get('playId');
@@ -46,15 +48,23 @@ export class BookTicket {
   }
 
   onSubmit(): void {
-    // if (this.bookTicketForm.valid && this.playId) {
-    //   this.playsService.editPlay(this.playId, this.bookTicketForm.value).subscribe({
-    //     next: () => this.router.navigate(['/plays']),
-    //     error: (err) => {
-    //       console.error('Failed to update play:', err);
-    //       this.markFormGroupTouched();
-    //     }
-    //   });
-    // }
+    if (this.bookTicketForm.valid && this.playId) {
+      const seats = this.bookTicketForm.get('seats')?.value;
+      
+      const bookingData: Booking = {
+        userId: this.authService.currentUser()?.['_id'] || '',
+        playId: this.playId,
+        seats: Number(seats),
+      }
+
+      this.bookingService.createBooking(bookingData).subscribe({
+        next: () => this.router.navigate(['/plays']),
+        error: (err) => {
+          console.error('Failed to create booking:', err);
+          this.markFormGroupTouched();
+        }
+      });
+    }
   }
 
   private markFormGroupTouched(): void {
