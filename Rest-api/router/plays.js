@@ -19,6 +19,4 @@ router.delete('/:playId/delete', playController.deletePlay);
 router.patch('/:playId/add-rating', playController.addRating)
 // router.put('/:playId/add-rating', auth(), playController.addRating)
 
-// router.get('/my-trips/:id/reservations', auth(), themeController.getReservations);
-
 module.exports = router

@@ -13,6 +13,7 @@ import { PlayDateFormatPipe } from '../../pipes'
 })
 export class PlayItem implements OnInit {
   @Input() play!: Play | null;
+  
 
   ngOnInit(): void {
   }
