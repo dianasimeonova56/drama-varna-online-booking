@@ -2,8 +2,11 @@
     <div class="home-content">
         <h1>Drama Theater Varna</h1>
         <div class="btn-group">
-            <a routerLink="/plays"  routerLinkActive="active" >Plays</a>
-            <a routerLink="/book"  routerLinkActive="active" >Book Ticket</a>
+            <a routerLink="/plays" routerLinkActive="active">Plays</a>
+            @if(isLoggedIn() && role == 'user') {
+            <a routerLink="/book" routerLinkActive="active">Book Ticket</a>
+            }
+
         </div>
     </div>
 </div>

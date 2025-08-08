@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../core/services';
 
@@ -15,7 +15,8 @@ export class Header {
   readonly isLoggedIn = this.authService.isLoggedIn;
   readonly currentUser = this.authService.currentUser;
 
-  protected role = this.authService.getCurrentUserRole();
+  // protected role = this.authService.getCurrentUserRole();
+  protected role = computed(() => this.currentUser()?.role);
 
   logout(): void {
     this.authService.logout().subscribe({

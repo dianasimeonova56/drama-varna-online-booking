@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../../core/services';
 
 @Component({
   selector: 'app-home-landing',
@@ -8,5 +9,8 @@ import { RouterModule } from '@angular/router';
   styleUrl: './home-landing.css'
 })
 export class HomeLanding {
+  protected authService = inject(AuthService);
 
+  readonly isLoggedIn = this.authService.isLoggedIn;
+  protected role = this.authService.getCurrentUserRole();
 }

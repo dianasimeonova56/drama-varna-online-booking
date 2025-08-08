@@ -15,7 +15,7 @@
                 <li>
                     <a routerLink="/profile" routerLinkActive="active">My Profile</a>
                 </li>
-                @if(this.role == 'admin') {
+                @if(role() === 'admin') {
                     <li>
                     <a routerLink="/plays/create" routerLinkActive="active">Create Play</a>
                 </li>
