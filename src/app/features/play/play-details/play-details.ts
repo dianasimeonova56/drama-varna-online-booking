@@ -7,10 +7,11 @@ import { CommonModule } from '@angular/common';
 import { StarRatingComponent } from "../../../shared/components";
 import { AuthService } from '../../../core/services';
 import { PlayDateFormatPipe } from "../../../shared/pipes/playDateFormat.pipe";
+import { ShowIfUpcomingDirective } from '../../../shared/directives';
 
 @Component({
   selector: 'app-play-details',
-  imports: [RouterModule, CommonModule, StarRatingComponent, PlayDateFormatPipe],
+  imports: [RouterModule, CommonModule, StarRatingComponent, PlayDateFormatPipe, ShowIfUpcomingDirective],
   templateUrl: './play-details.html',
   styleUrl: './play-details.css',
   changeDetection: ChangeDetectionStrategy.OnPush
