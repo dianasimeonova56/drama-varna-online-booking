@@ -71,12 +71,12 @@ export class AuthService {
     }
 
     getCurrentUserId(): string | null {
-        return this._currentUser()?.id || null
+        return this._currentUser()?._id || null
     }
 
     updateUser(user: User): Observable<User> {
-        return this.httpClient.put<User>(`${this.apiUrl}/users/${user.id}`, {
-            _id: user.id,
+        return this.httpClient.put<User>(`${this.apiUrl}/users/${user._id}`, {
+            _id: user._id,
             username: user.username,
             email: user.email,
         }, {
