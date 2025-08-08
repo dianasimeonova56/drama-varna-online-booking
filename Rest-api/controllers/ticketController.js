@@ -1,4 +1,4 @@
-const { ticketModel } = require('../models');
+const { ticketModel, bookingModel, playModel } = require('../models');
 
 function getTickets(req, res, next) {
     ticketModel.find()
@@ -21,35 +21,46 @@ function getTicket(req, res, next) {
         .catch(next);
 }
 
-async function generateTicketsForBooking(req, res, next) {
-  const { bookingId } = req.params;
+async function generateTicketsForBooking(bookingData) {
 
-  try {
-    const booking = await Booking.findById(bookingId);
-    if (!booking) {
-      return res.status(404).json({ message: 'Booking not found' });
+    try {
+        const booking = await bookingModel.findById(bookingData._id);
+        // console.log('Booking found:', booking);
+
+        if (!booking) {
+            console.log("Booking not found!");
+
+        }
+        const play = await playModel.findById(bookingData.playId);
+        console.log('Play found:', play);
+
+        if (!play) {
+            console.log("Play not found!");
+
+        }
+        const ticketsToCreate = [];
+
+        for (let i = 0; i < booking.seats; i++) {
+            ticketsToCreate.push({
+                title: play.playName,
+                date: play.playDate,
+                place: play.place,
+                //TODO add seatNumber
+                seat: booking.seats,
+                userId: booking.userId,
+                playId: booking.playId,
+            });
+        }
+
+        const tickets = await ticketModel.insertMany(ticketsToCreate);
+        console.log(tickets);
+        
+        return tickets;
+
+    } catch (err) {
+        console.log(err);
+
     }
-
-    const ticketsToCreate = [];
-
-    for (let i = 1; i <= booking.seats; i++) {
-      ticketsToCreate.push({
-        bookingId: booking._id,
-        userId: booking.userId,
-        playId: booking.playId,
-        seatNumber: `Seat-${i}`,
-        status: 'active',
-        issuedAt: new Date()
-      });
-    }
-
-    const tickets = await ticketModel.insertMany(ticketsToCreate);
-
-    res.status(201).json(tickets);
-
-  } catch (err) {
-    next(err);
-  }
 }
 
 function createTicket(req, res, next) {
