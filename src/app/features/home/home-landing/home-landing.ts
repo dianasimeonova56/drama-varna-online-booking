@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../../core/services';
 
@@ -12,5 +12,6 @@ export class HomeLanding {
   protected authService = inject(AuthService);
 
   readonly isLoggedIn = this.authService.isLoggedIn;
-  protected role = this.authService.getCurrentUserRole();
+  readonly currentUser = this.authService.currentUser;
+  protected role = computed(() => this.currentUser()?.role);
 }
