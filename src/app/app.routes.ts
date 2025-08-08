@@ -46,8 +46,7 @@ export const routes: Routes = [
      {
           path: 'plays/:playId',
           loadComponent: () => import('./features/play/play-details/play-details')
-               .then(m => m.PlayDetailsComponent),
-          canActivate: [authGuard]
+               .then(m => m.PlayDetailsComponent)
      },
      {
           path: 'book/:playId',
