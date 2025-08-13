@@ -26,6 +26,12 @@ const playSchema = new mongoose.Schema({
     director: {
         type: String,
     },
+    totalSeats: {
+        type: Number,
+    },
+    availableSeats: {
+        type: Number,
+    },
     ratings: [{
         user: {
             type: ObjectId,
@@ -42,11 +48,29 @@ const playSchema = new mongoose.Schema({
 
 }, { timestamps: { createdAt: 'created_at' } });
 
+playSchema.pre('save', function (next) {
+    const seatCapacities = {
+        'Main Stage': 50,
+        'Secondary Stage': 25,
+        'Opera': 30
+    };
+    console.log(this.place);
+    if (seatCapacities[this.place]) {
+        this.totalSeats = seatCapacities[this.place];
+    }
+    if (this.isNew && (this.availableSeats === undefined || this.availableSeats === null)) {
+        this.availableSeats = this.totalSeats;
+    }
+    next();
+});
+
+
 playSchema.virtual('averageRating').get(function () {
     if (this.ratings.length === 0) return 0;
     const sum = this.ratings.reduce((total, r) => total + r.rating, 0);
     return sum / this.ratings.length;
 });
+
 
 playSchema.set('toJSON', { virtuals: true });
 playSchema.set('toObject', { virtuals: true });

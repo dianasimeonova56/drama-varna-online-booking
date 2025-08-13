@@ -34,7 +34,6 @@ export class BookTicket {
   constructor() {
     this.bookTicketForm = this.formBuilder.group({
       seats: ['', [Validators.required, Validators.min(1)]],
-      // seatNumbers: [''],
     })
 
     this.playId = this.route.snapshot.paramMap.get('playId');

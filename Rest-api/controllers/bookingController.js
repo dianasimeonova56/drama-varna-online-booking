@@ -1,5 +1,5 @@
 const { bookingModel, playModel } = require('../models');
-const {generateTicketsForBooking} = require('./ticketController.js')
+const { generateTicketsForBooking } = require('./ticketController.js')
 
 function newBooking(bookingData) {
     return bookingModel.create(bookingData);
@@ -38,25 +38,22 @@ async function createBooking(req, res, next) {
         if (!play) {
             return res.status(404).json({ message: 'Play not found' });
         }
-        console.log(new Date(play.playDate));
-        
 
         if (new Date(play.playDate) < new Date()) {
             return res.status(400).json({ message: 'Cannot book past plays' });
         }
 
-        // const availableSeats = await getAvailableSeats(bookingData.playId);
+        if (play.availableSeats < bookingData.seats) {
+            return res.status(400).json({ 
+                message: `Not enough seats available. Only ${play.availableSeats} seats available` 
+            });
+        }
 
-        // if (bookingData.seatsBooked > availableSeats) {
-        //     return res.status(400).json({ message: `Only ${availableSeats} seats available` });
-        // }
+        play.availableSeats -= bookingData.seats;
+        await play.save();
 
         const createdBooking = await newBooking(bookingData);
 
-        console.log(createdBooking);
-        
-
-        // Generate tickets AFTER booking is created
         const tickets = await generateTicketsForBooking(createdBooking);
 
         res.status(201).json({ booking: createdBooking, tickets });

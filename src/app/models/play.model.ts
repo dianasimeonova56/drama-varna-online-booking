@@ -8,6 +8,7 @@ export interface Play {
     playDate: string;
     place: string;
     imageUrl: string;
-    //cast - collection of actors
-    ratings: Array<Rating>; // users add rating for play; only if watched?
+    totalSeats: number;
+    availableSeats: number;
+    ratings: Array<Rating>;
 }

@@ -23,6 +23,8 @@ export class PlayDetailsComponent {
   protected playsService = inject(PlaysService);
   protected router = inject(Router);
   protected role = this.authService.getCurrentUserRole();
+  
+  availableSeats!: number | undefined;
 
   //spinner?
   constructor(private route: ActivatedRoute) { }
@@ -42,6 +44,7 @@ export class PlayDetailsComponent {
         } else {
           this.averageRating.set(0)
         }
+        this.availableSeats = play?.availableSeats;
       },
       error: (err) => console.error('Failed to load play', err)
     });

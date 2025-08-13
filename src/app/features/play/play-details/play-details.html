@@ -21,9 +21,14 @@
                             <div class="scene-time" (click)="deletePlay(play._id)">Delete</div>
                             }
                             @if(this.role=='user') {
-                            <div class="scene-time" [routerLink]="['/book/', play._id]" appShowIfUpcoming [playDate]="play.playDate">
+                            @if(this.availableSeats == 0) {
+                            <div class="scene-time">Sold out</div>
+                            } @else {
+                            <div class="scene-time" [routerLink]="['/book/', play._id]" appShowIfUpcoming
+                                [playDate]="play.playDate">
                                 Book Ticket
                             </div>
+                            }
                             }
                         </div>
 
