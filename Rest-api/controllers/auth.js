@@ -14,7 +14,6 @@ const removePassword = (data) => {
 
 function register(req, res, next) {
     const { email, username, password, repeatPassword, role } = req.body;
-    console.log(role);
 
 
     return userModel.create({ email, username, password, role })
@@ -50,8 +49,6 @@ function login(req, res, next) {
 
     // Normalize email
     email = email.trim().toLowerCase();
-
-    console.log('Received credentials:', email, password);
 
     userModel.findOne({ email })
         .then(user => {
