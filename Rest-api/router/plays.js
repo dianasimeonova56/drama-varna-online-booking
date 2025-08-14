@@ -17,6 +17,7 @@ router.put('/:playId/edit', playController.editPlay);
 router.delete('/:playId/delete', playController.deletePlay);
 
 router.patch('/:playId/add-rating', playController.addRating)
+router.get('/:playId/user-rating', playController.getUserRating)
 // router.put('/:playId/add-rating', auth(), playController.addRating)
 
 module.exports = router

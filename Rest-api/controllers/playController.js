@@ -85,7 +85,7 @@ function deletePlay(req, res, next) {
 async function addRating(req, res, next) {
     const { playId } = req.params;
     const { rating } = req.body;
-    // const { _id: userId } = req.user;
+    const { userId } = req.user._id;
 
 
     try {
@@ -95,16 +95,20 @@ async function addRating(req, res, next) {
             return res.status(404).json({ message: 'Play not found' });
         }
 
-        // const existingRating = play.ratings.find(r => r.user.toString() === userId);
+        if (!userId) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
 
-        // if (existingRating) {
-        //     existingRating.rating = rating;
-        // } else {
-        play.ratings.push({ user: "686e3a5899ccbc29fcf87ba5", rating });
-        //}
+        const existingRating = play.ratings.find(r => r.user.toString() === userId);
+
+        if (existingRating) {
+            existingRating.rating = rating;
+        } else {
+            play.ratings.push({ user: userId, rating });
+        }
 
         const total = play.ratings.reduce((sum, r) => sum + r.rating, 0);
-        play.averageRating = (total / play.ratings.length).toFixed(2);
+        play.averageRating = Number((total / play.ratings.length).toFixed(2));
         console.log(play.averageRating);
 
 
@@ -116,6 +120,16 @@ async function addRating(req, res, next) {
     }
 }
 
+async function getUserRating(req, res, next) {
+    const play = await playModel.findById(req.params.playId);
+    const { userId } = req.user._id;
+
+    const rating = play.ratings.find(r => r.user.toString() === userId);
+    if (rating) {
+        return res.json({ rating: rating.rating });
+    }
+    res.json({ rating: null })
+}
 
 module.exports = {
     newPlay,
@@ -126,4 +140,5 @@ module.exports = {
     editPlay,
     deletePlay,
     addRating,
+    getUserRating,
 }
