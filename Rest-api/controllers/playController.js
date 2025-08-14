@@ -55,7 +55,6 @@ function editPlay(req, res, next) {
     const { playId } = req.params;
     const { playData } = req.body;
 
-    // if the userId is not the same as this one of the post, the post will not be updated
     playModel.findByIdAndUpdate(playId, playData, { new: true })
         .then(updatedPlay => {
             if (updatedPlay) {
@@ -85,8 +84,9 @@ function deletePlay(req, res, next) {
 async function addRating(req, res, next) {
     const { playId } = req.params;
     const { rating } = req.body;
-    const { userId } = req.user._id;
-
+    const userId = req.user._id.toString();
+    // console.log(req.user, userId);
+    
 
     try {
         const play = await playModel.findById(playId);
@@ -109,8 +109,6 @@ async function addRating(req, res, next) {
 
         const total = play.ratings.reduce((sum, r) => sum + r.rating, 0);
         play.averageRating = Number((total / play.ratings.length).toFixed(2));
-        console.log(play.averageRating);
-
 
         await play.save();
 
@@ -122,13 +120,13 @@ async function addRating(req, res, next) {
 
 async function getUserRating(req, res, next) {
     const play = await playModel.findById(req.params.playId);
-    const { userId } = req.user._id;
+    const userId = req.user._id.toString();
 
     const rating = play.ratings.find(r => r.user.toString() === userId);
     if (rating) {
-        return res.json({ rating: rating.rating });
+        return res.json({ hasRated: true, message: "User has already rated this play!" });
     }
-    res.json({ rating: null })
+    res.json({ rating: false })
 }
 
 module.exports = {

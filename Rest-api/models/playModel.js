@@ -54,7 +54,6 @@ playSchema.pre('save', function (next) {
         'Secondary Stage': 25,
         'Opera': 30
     };
-    console.log(this.place);
     if (seatCapacities[this.place]) {
         this.totalSeats = seatCapacities[this.place];
     }

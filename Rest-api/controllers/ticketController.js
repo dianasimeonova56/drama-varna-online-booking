@@ -25,14 +25,13 @@ async function generateTicketsForBooking(bookingData) {
 
     try {
         const booking = await bookingModel.findById(bookingData._id);
-        // console.log('Booking found:', booking);
 
         if (!booking) {
+            //TODO not log but return error
             console.log("Booking not found!");
 
         }
         const play = await playModel.findById(bookingData.playId);
-        console.log('Play found:', play);
 
         if (!play) {
             console.log("Play not found!");
@@ -53,7 +52,6 @@ async function generateTicketsForBooking(bookingData) {
         }
 
         const tickets = await ticketModel.insertMany(ticketsToCreate);
-        console.log(tickets);
         
         return tickets;
 
