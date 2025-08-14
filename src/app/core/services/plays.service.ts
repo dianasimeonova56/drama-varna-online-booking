@@ -2,7 +2,6 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable, tap } from "rxjs";
 import { Play } from "../../models/play.model";
-import { Rating } from "../../models";
 
 @Injectable({
     providedIn: 'root'
@@ -59,5 +58,9 @@ export class PlaysService {
 
     addRating(playId: string, rating: number) {
         return this.httpClient.patch<{ message: string, averageRating: number }>(this.apiUrl + `/${playId}/add-rating`, { rating })
+    }
+
+    getUserRating(playId: string) {
+        return this.httpClient.get<{rating: number | null}>(this.apiUrl + `/${playId}/user-rating`)
     }
 }
