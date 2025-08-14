@@ -57,10 +57,15 @@ export class PlaysService {
     }
 
     addRating(playId: string, rating: number) {
-        return this.httpClient.patch<{ message: string, averageRating: number }>(this.apiUrl + `/${playId}/add-rating`, { rating })
+        return this.httpClient.patch<{ message: string, averageRating: number }>(
+            `${this.apiUrl}/${playId}/add-rating`,
+            { rating },
+            { withCredentials: true }
+        );
     }
 
     getUserRating(playId: string) {
-        return this.httpClient.get<{rating: number | null}>(this.apiUrl + `/${playId}/user-rating`)
+        return this.httpClient.get<{ hasRated: boolean, message: string }>
+            (this.apiUrl + `/${playId}/user-rating`, { withCredentials: true })
     }
 }
