@@ -1,4 +1,4 @@
-const jwt = require('./jwt');
+const jwt = require('./jwt.js');
 const auth = require('./auth');
 const errorHandler = require('./errHandler');
 
