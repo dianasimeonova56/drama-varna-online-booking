@@ -3,7 +3,6 @@ const { ticketModel, bookingModel, playModel } = require('../models');
 function getTickets(req, res, next) {
     ticketModel.find()
         .populate('userId')
-        .populate('playId')
         .then(tickets => res.json(tickets))
         .catch(next);
 }
@@ -13,7 +12,6 @@ function getTicket(req, res, next) {
 
     ticketModel.findById(ticketId)
         .populate('userId')
-        .populate('playId')
         .then(ticket => {
             if (!ticket) return res.status(404).json({ message: 'Ticket not found' });
             res.json(ticket);
