@@ -65,7 +65,7 @@ playSchema.pre('save', function (next) {
 
 
 playSchema.virtual('averageRating').get(function () {
-    if (this.ratings.length === 0) return 0;
+    if (!this.ratings) return 0;
     const sum = this.ratings.reduce((total, r) => total + r.rating, 0);
     return sum / this.ratings.length;
 });

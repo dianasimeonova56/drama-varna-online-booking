@@ -27,9 +27,15 @@ async function generateTicketsForBooking(bookingData) {
         if (!booking) {
             //TODO not log but return error
             console.log("Booking not found!");
-
         }
         const play = await playModel.findById(bookingData.playId);
+
+        const lastTicket = await ticketModel
+            .findOne({ playId: booking.playId })
+            .sort({ seat: -1 });
+
+        const startSeat = lastTicket ? lastTicket.seat + 1 : 1;
+
 
         if (!play) {
             console.log("Play not found!");
@@ -37,20 +43,19 @@ async function generateTicketsForBooking(bookingData) {
         }
         const ticketsToCreate = [];
 
-        for (let i = 0; i < booking.seats; i++) {
+        for (let seatNum = startSeat; seatNum < startSeat + booking.seats; seatNum++) {
             ticketsToCreate.push({
                 title: play.playName,
                 date: play.playDate,
                 place: play.place,
-                //TODO add seatNumber
-                seat: booking.seats,
+                seat: seatNum,
                 userId: booking.userId,
                 playId: booking.playId,
             });
         }
 
         const tickets = await ticketModel.insertMany(ticketsToCreate);
-        
+
         return tickets;
 
     } catch (err) {
