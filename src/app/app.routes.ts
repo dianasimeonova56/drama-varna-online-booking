@@ -25,6 +25,12 @@ export const routes: Routes = [
           canActivate: [guestGuard]
      },
      {
+          path: 'profile',
+          loadComponent: () => import('./features/profile/user-profile/user-profile').then(c => c.UserProfile),
+          canActivate: [authGuard],
+          data: { roles: ['user'] }
+     },
+     {
           path: 'plays',
           loadComponent: () => import('./features/play/plays-component/plays-component')
                .then(m => m.PlaysComponent)
