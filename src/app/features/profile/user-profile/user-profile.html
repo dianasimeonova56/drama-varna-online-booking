@@ -1,0 +1,28 @@
+<div class="profile-container">
+  <div class="profile-card">
+    <div class="profile-header">
+      <!-- <img
+        class="profile-avatar"
+        src="assets/default-avatar.png"
+        alt="User Avatar"
+      /> -->
+      <h2 class="username">{{ user.username }}</h2>
+      <p class="email">{{ user.email }}</p>
+    </div>
+
+    <div class="profile-details">
+      <div class="detail">
+        <span class="label">Role:</span>
+        <span class="value">{{ user.role }}</span>
+      </div>
+      <div class="detail">
+        <span class="label">Tickets booked:</span>
+        <span class="value">{{ tickets.length }}</span>
+      </div>
+    </div>
+
+    <div class="profile-actions">
+      <button class="btn primary" >Edit Profile</button>
+    </div>
+  </div>
+</div>
