@@ -1,9 +1,9 @@
 .container {
   display: flex;
-  align-items: center;        /* vertical center */
-  justify-content: center;    /* center horizontally */
+  align-items: center;        
+  justify-content: center;   
   gap: 2rem;
-  height: 80vh;              /* full screen height */
+  height: 80vh;              
   padding: 2rem;
   box-sizing: border-box;
 }
@@ -74,7 +74,7 @@ button:disabled {
 @media (max-width: 900px) {
   .booking-layout {
     flex-direction: column;
-    height: auto; /* Let it grow naturally */
+    height: auto; 
     align-items: stretch;
   }
 
