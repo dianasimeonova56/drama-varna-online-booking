@@ -1,13 +1,7 @@
-const { userModel, playModel } = require('../models');
+const { playModel } = require('../models');
 
 function newPlay(playData) {
     return playModel.create(playData)
-    // .then(post => {
-    //     return Promise.all([
-    //         userModel.updateOne({ _id: userId }, { $push: { plays: post._id }, $addToSet: { themes: themeId } }),
-    //         themeModel.findByIdAndUpdate({ _id: themeId }, { $push: { posts: post._id }, $addToSet: { subscribers: userId } }, { new: true })
-    //     ])
-    // })
 }
 
 function getLatestsPlays(req, res, next) {
@@ -23,24 +17,51 @@ function getLatestsPlays(req, res, next) {
 }
 
 function getPlays(req, res, next) {
-    return playModel.find()
-        // .populate('director')
-        // .populate('ratings.user')
-        .then(plays => {
-            res.status(200).json(plays)
-        })
-        .catch(next);;
+    playModel.find()
+        .then(plays => res.status(200).json(plays))
+        .catch(next);
 }
+
+function searchPlays(req, res, next) {
+    const { playName, director, playDate, q } = req.query;
+
+    const query = {};
+    const orArray = [];
+
+    if (q) {
+        orArray.push({ playName: { $regex: q, $options: 'i' } });
+        orArray.push({ director: { $regex: q, $options: 'i' } });
+    }
+
+    if (playName) {
+        query.playName = { $regex: playName, $options: 'i' };
+    }
+    if (director) {
+        query.director = { $regex: director, $options: 'i' };
+    }
+    if (playDate) {
+        query.playDate = { $gte: playDate };
+    }
+
+    if (orArray.length > 0) {
+        query.$or = orArray;
+    }
+
+    playModel.find(query)
+        .then(plays => res.status(200).json(plays))
+        .catch(next);
+
+}
+
 
 function getPlay(req, res, next) {
     const playId = req.params.playId;
 
     return playModel.findById(playId)
-        // .populate('director')
         .then(play => {
             res.status(200).json(play)
         })
-        .catch(next);;
+        .catch(next);
 }
 
 function createPlay(req, res, next) {
@@ -85,8 +106,7 @@ async function addRating(req, res, next) {
     const { playId } = req.params;
     const { rating } = req.body;
     const userId = req.user._id.toString();
-    // console.log(req.user, userId);
-    
+
 
     try {
         const play = await playModel.findById(playId);
@@ -139,4 +159,5 @@ module.exports = {
     deletePlay,
     addRating,
     getUserRating,
+    searchPlays
 }

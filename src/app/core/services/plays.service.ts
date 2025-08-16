@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable, tap } from "rxjs";
 import { Play } from "../../models/play.model";
@@ -67,5 +67,17 @@ export class PlaysService {
     getUserRating(playId: string) {
         return this.httpClient.get<{ hasRated: boolean, message: string }>
             (this.apiUrl + `/${playId}/user-rating`, { withCredentials: true })
+    }
+
+    searchPlays(playName?: string, director?: string, playDate?: Date): Observable<Play[]> {
+        let query = new HttpParams();
+
+        if (playName) query = query.set('playName', playName);
+        if (director) query = query.set('director', director);
+        if (playDate) query = query.set('playDate', playDate.toString());
+        console.log(playDate?.toString());
+        
+
+        return this.httpClient.get<Play[]>(`${this.apiUrl}/search?${query}`);
     }
 }

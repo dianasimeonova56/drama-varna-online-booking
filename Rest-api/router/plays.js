@@ -6,6 +6,7 @@ const { playController } = require('../controllers');
 // middleware that is specific to this router
 
 router.get('/', playController.getPlays);
+router.get('/search', playController.searchPlays);
 
 router.get('/get-latest-plays', playController.getLatestsPlays)
 router.get('/:playId', playController.getPlay);

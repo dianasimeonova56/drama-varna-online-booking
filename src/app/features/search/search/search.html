@@ -1,0 +1,15 @@
+<div class="search-bar">
+    <form class="search-form" [formGroup]="searchForm" (ngSubmit)="search()">
+        <!-- <label for="search-play">Search for a specific play...</label> -->
+        <input class="search-input" type="text" placeholder="Search for play name" formControlName="playName" />
+
+        <!-- <label for="search-director">Search for a specific director...</label> -->
+        <input class="search-input" type="text" placeholder="Search for play director" formControlName="director"/>
+
+        <!-- <label for="search-date">Search for a specific date...</label> -->
+        <input class="search-input" type="datetime-local" placeholder="Search for play date" formControlName="playDate" />
+
+        <button class="search-btn" type="submit">Search</button>
+    </form>
+
+</div>

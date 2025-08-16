@@ -11,7 +11,6 @@ import { PlaysService } from '../../../core/services/plays.service';
   styleUrl: './create-play.css'
 })
 export class CreatePlay {
-  private authService = inject(AuthService);
   private playsService = inject(PlaysService);
   private router = inject(Router);
   private formBuilder = inject(FormBuilder);
@@ -158,7 +157,6 @@ export class CreatePlay {
     return null;
   }
 
-  //TODO
   private minDateValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
     if (!value) return null;
