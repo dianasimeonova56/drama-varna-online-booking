@@ -6,7 +6,6 @@ import { catchError, throwError } from "rxjs";
 export const ErrorInterceptor: HttpInterceptorFn = (req, next) => {
     const errorService = inject(ErrorService);
     
-    
     return next(req).pipe(
         catchError((error: HttpErrorResponse)=> {
             let errorMessage = '';
