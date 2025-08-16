@@ -1,11 +1,25 @@
 <app-search (searchEvent)="onSearch($event)"></app-search>
 <section class="plays">
-    @if(plays$ || plays$ == []) {
-    @for(play of plays$ | async; track play._id) {
+    <h2>Upcoming plays:</h2>
+    @if(loading) {
+    <p>Loading plays...</p>
+    } @else if (upcomingPlays.length) {
+    @for(play of upcomingPlays; track play._id) {
     <app-play-item [play]="play"></app-play-item>
-    } 
-    }@else {
-        <div>No plays to display!</div>
+    }
+    } @else {
+    <div>No upcoming plays to display!</div>
     }
 
+    <h2>Past plays:</h2>
+    @if(loading) {
+    <p>Loading plays...</p>
+    }
+    @else if(pastPlays.length) {
+    @for(play of pastPlays; track play._id) {
+    <app-play-item [play]="play"></app-play-item>
+    }
+    } @else {
+    <div>No past plays to display!</div>
+    }
 </section>

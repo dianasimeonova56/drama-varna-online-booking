@@ -78,6 +78,6 @@ export class PlaysService {
         console.log(playDate?.toString());
         
 
-        return this.httpClient.get<Play[]>(`${this.apiUrl}/search?${query}`);
+        return this.httpClient.get<Play[]>(`${this.apiUrl}/search`, { params: query });
     }
 }

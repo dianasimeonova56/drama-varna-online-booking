@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { PlayItem } from "../../../shared/components/play-item/play-item";
 import { Observable } from 'rxjs';
 import { Play } from '../../../models/play.model';
