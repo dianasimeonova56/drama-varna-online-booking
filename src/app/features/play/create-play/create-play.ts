@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { AuthService } from '../../../core/services';
 import { Router } from '@angular/router';
 import { PlaysService } from '../../../core/services/plays.service';
 

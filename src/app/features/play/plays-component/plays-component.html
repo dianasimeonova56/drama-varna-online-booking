@@ -1,6 +1,11 @@
 <app-search (searchEvent)="onSearch($event)"></app-search>
 <section class="plays">
+    @if(plays$ || plays$ == []) {
     @for(play of plays$ | async; track play._id) {
-        <app-play-item [play]="play"></app-play-item>
+    <app-play-item [play]="play"></app-play-item>
+    } 
+    }@else {
+        <div>No plays to display!</div>
     }
+
 </section>

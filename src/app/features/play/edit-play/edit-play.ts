@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService, PlaysService } from '../../../core/services';
+import { PlaysService } from '../../../core/services';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 
 @Component({
@@ -10,7 +10,6 @@ import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validatio
   styleUrl: './edit-play.css'
 })
 export class EditPlay {
-  // private authService = inject(AuthService);
   private playsService = inject(PlaysService)
   private router = inject(Router);
   private route = inject(ActivatedRoute);
@@ -38,6 +37,7 @@ export class EditPlay {
   private loadPlay(id: string) {
     this.playsService.getPlay(id).subscribe({
       next: (play) => {
+
         this.editPlayForm.patchValue({
           playName: play.playName,
           director: play.director,
@@ -137,7 +137,7 @@ export class EditPlay {
   onSubmit(): void {
     if (this.editPlayForm.valid && this.playId) {
       this.playsService.editPlay(this.playId, this.editPlayForm.value).subscribe({
-        next: () => this.router.navigate(['/plays']),
+        next: () =>this.router.navigate(['/plays']),
         error: (err) => {
           console.error('Failed to update play:', err);
           this.markFormGroupTouched();
