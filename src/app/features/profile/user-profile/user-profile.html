@@ -1,11 +1,6 @@
 <div class="profile-container">
   <div class="profile-card">
     <div class="profile-header">
-      <!-- <img
-        class="profile-avatar"
-        src="assets/default-avatar.png"
-        alt="User Avatar"
-      /> -->
       <h2 class="username">{{ user.username }}</h2>
       <p class="email">{{ user.email }}</p>
     </div>
@@ -17,12 +12,27 @@
       </div>
       <div class="detail">
         <span class="label">Tickets booked:</span>
-        <span class="value">{{ tickets.length }}</span>
+        <span class="value">
+          {{ tickets().length }}
+        </span>
+        <button class="btn primary" (click)="togglePlays()">See Booked Plays</button>
+
       </div>
     </div>
 
     <div class="profile-actions">
-      <button class="btn primary" >Edit Profile</button>
+      <button class="btn primary">Edit Profile</button>
     </div>
+  </div>
+</div>
+<div class="booked-plays" [class.open]="isOpen()">
+  <div class="content">
+    <!-- @if(isOpen()) {
+      @for(booking of bookings(); track booking._id) {
+         <app-booking-item [booking]="booking"></app-booking-item>
+      }
+     
+      } -->
+      
   </div>
 </div>

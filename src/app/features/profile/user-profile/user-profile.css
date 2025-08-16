@@ -4,6 +4,34 @@
   padding: 2rem;
 }
 
+.booked-plays {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  transition: grid-template-rows 1s;
+}
+
+.booked-plays.open {
+  grid-template-rows: 1fr;
+}
+
+.booked-plays.content {
+  min-height: 0;
+  transition: visibility 1s;
+  padding: 0 20px;
+  visibility: hidden;
+  margin-top: 1em;
+  font-weight: bold;
+  font-size: 20px;
+  background-color: red;
+  color: #ebebeb;
+  overflow: hidden;
+}
+
+.booked-plays.open .content {
+  visibility: visible;
+}
+
 .profile-card {
   background: var(--surface-color, #fff);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -101,7 +129,6 @@
   background: var(--danger-dark, #b71c1c);
 }
 
-/* Responsive adjustments */
 @media (max-width: 480px) {
   .profile-card {
     margin: 0 1rem;

@@ -1,6 +1,7 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { AuthService, TicketsService } from '../../../core/services';
-import { Ticket } from '../../../models';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { AuthService, TicketsService, PlaysService } from '../../../core/services';
+import { Booking, Play, Ticket } from '../../../models';
+import { BookingService } from '../../../core/services/booking.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -11,20 +12,33 @@ import { Ticket } from '../../../models';
 export class UserProfile implements OnInit {
   authService = inject(AuthService);
   ticketsService = inject(TicketsService);
+  bookingService = inject(BookingService);
+  playService = inject(PlaysService);
+  isOpen = signal(true);
+
 
   editing = false;
   user = { ...this.authService.currentUser() };
-  tickets: Ticket[] = [];
+  tickets = signal<Ticket[]>([])
+  bookings = signal<Booking[]>([]);
+  plays = signal<Play[]>([]);
 
 
   ngOnInit(): void {
     if (this.user?._id) {
-      this.ticketsService.getTickets(this.user._id).subscribe(t => {
-        this.tickets = t;
-        console.log(this.tickets.length);
-        
+      this.ticketsService.getTickets(this.user._id).subscribe({
+        next: (t) => this.tickets.set(t),
+        error: (err) => console.error('Failed to load tickets', err)
+      });
+      this.bookingService.getBookings(this.user._id).subscribe({
+        next: (b) => this.bookings.set(b),
+        error: (err) => console.error('Failed to load bookings', err)
       });
     }
+  }
+
+  togglePlays() {
+    this.isOpen.update((isOpen) => !isOpen);
   }
 
   toggleEdit() {
