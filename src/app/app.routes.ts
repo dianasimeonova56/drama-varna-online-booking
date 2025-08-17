@@ -69,6 +69,13 @@ export const routes: Routes = [
           data: { roles: ['user'] }
      },
      {
+          path: 'my-bookings',
+          loadComponent: () => import('./features/booking/my-bookings/my-bookings')
+               .then(m => m.MyBookings),
+          canActivate: [authGuard, roleGuard],
+          data: { roles: ['user'] }
+     },
+     {
           path: 'logout',
           redirectTo: '/home',
           pathMatch: 'full'
