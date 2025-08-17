@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable, tap } from "rxjs";
 import { Booking } from "../../models/booking.model";
+import { PopulatedBooking } from "../../models";
 
 @Injectable({
     providedIn: 'root'
@@ -10,23 +11,28 @@ import { Booking } from "../../models/booking.model";
 export class BookingService {
     private apiUrl = 'http://localhost:3000/api/bookings';
     private bookingsBehaviourSubject = new BehaviorSubject<Booking[]>([]);
+    private populatedBookingBehaviourSubject = new BehaviorSubject<PopulatedBooking[]>([]);
     private selectedBookingBehaviourSubject = new BehaviorSubject<Booking | null>(null);
+    private selectedPopulatedBookingBehaviourSubject = new BehaviorSubject<PopulatedBooking | null>(null);
 
     public bookings$ = this.bookingsBehaviourSubject.asObservable();
     public booking$ = this.selectedBookingBehaviourSubject.asObservable();
 
+    public populatedBookings$ = this.populatedBookingBehaviourSubject.asObservable();
+    public populatedBooking$ = this.selectedPopulatedBookingBehaviourSubject.asObservable();
+
     constructor(private httpClient: HttpClient) { }
 
-    getBookings(userId: string | null): Observable<Booking[]> {
-        return this.httpClient.get<Booking[]>(`${this.apiUrl}/${userId}/`)
+    getBookings(userId: string | null): Observable<PopulatedBooking[]> {
+        return this.httpClient.get<PopulatedBooking[]>(`${this.apiUrl}/${userId}/`)
             .pipe(
-                tap(bookings => this.bookingsBehaviourSubject.next(bookings))
+                tap(bookings => this.populatedBookingBehaviourSubject.next(bookings))
             );
     }
 
-    getBooking(bookingId: string | null): Observable<Booking> {
-        return this.httpClient.get<Booking>(`${this.apiUrl}/${bookingId}`).pipe(
-            tap(booking => this.selectedBookingBehaviourSubject.next(booking))
+    getBooking(bookingId: string | null): Observable<PopulatedBooking> {
+        return this.httpClient.get<PopulatedBooking>(`${this.apiUrl}/${bookingId}`).pipe(
+            tap(booking => this.selectedPopulatedBookingBehaviourSubject.next(booking))
         );
     }
 

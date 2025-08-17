@@ -8,7 +8,7 @@ function newBooking(bookingData) {
 function getBookings(req, res, next) {
     bookingModel.find()
         .populate('userId', 'username email')
-        .populate('playId', 'playName place imageUrl')
+        .populate('playId', 'playName place imageUrl playDate')
         .then(bookings => {
             res.status(200).json(bookings);
         })

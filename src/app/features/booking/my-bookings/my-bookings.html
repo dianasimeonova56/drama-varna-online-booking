@@ -1,0 +1,5 @@
+<section class="bookings">
+    @for(booking of bookings$ | async; track booking._id) {
+    <app-booking-item [booking]="booking"></app-booking-item>
+            }
+</section>

@@ -1,0 +1,129 @@
+.booking-item {
+    display: flex;
+    width: 100%;
+    height: auto;
+    flex-wrap: wrap;
+}
+
+.left-side {
+    width: 80px;
+    background-color: #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-orientation: upright;
+}
+
+.left-side p {
+    color: red;
+    font-size: 32px;
+    font-weight: bold;
+    margin: 0;
+    transform: rotate(-90deg);
+    letter-spacing: 10px;
+}
+
+.container {
+    flex: 1;
+    padding: 0;
+    flex-direction: column;
+}
+
+.content-wrapper {
+    position: relative;
+    align-items: stretch;
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1;
+}
+
+.image {
+    flex: 1 1 50%;
+    background-color: #eee;
+    min-width: 300px;
+    max-width: 600px;
+}
+
+.image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+
+.right-side {
+    flex: 1 1 50%;
+    background-color: #c62828;
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 300px;
+    max-width: 600px;
+    box-sizing: border-box;
+}
+
+.top-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.logo {
+    font-size: 14px;
+    line-height: 1.4;
+    margin-bottom: 30px;
+}
+
+.date-box {
+    background-color: #ccc;
+    color: #c62828;
+    font-size: 32px;
+    font-weight: bold;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.scene-time {
+    background-color: #ccc;
+    color: #c62828;
+    font-size: 16px;
+    padding: 10px 15px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.title {
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.info p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.tickets {
+    display: flex;
+    gap: 5px;
+}

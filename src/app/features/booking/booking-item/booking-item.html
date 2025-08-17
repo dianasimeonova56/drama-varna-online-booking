@@ -1,0 +1,50 @@
+<section class="container">
+    <div class="booking-item">
+        @if(booking) {
+        <div class="left-side">
+            <p>booking</p>
+        </div>
+
+        <div class="container">
+            <div class="content-wrapper">
+                <div class="image">
+                    <img src="{{booking.playId.imageUrl}}" />
+                </div>
+
+                <div class="right-side">
+                    <div class="logo">
+                        <img src="images/logo.png" />
+                    </div>
+                    <div class="top-row">
+                        <div class="date-box">{{booking.playId.playDate | playDateFormat: 'day'}}</div>
+                        <div class="scene-time">{{booking.playId.place}} - {{booking.playId.playDate | playDateFormat:
+                            'time'}}</div>
+                        <div class="scene-time" (click)="toggleTickets()">
+                            {{ expanded ? 'Hide Tickets' : 'Show Tickets' }}
+                        </div>
+                    </div>
+
+
+                    <div class="title">{{booking.playId.playName}}</div>
+
+                    <div class="info">
+                        <p>Information: <br />
+                            Seats bookes: {{booking.seats}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tickets">
+            @if(expanded && tickets$) {
+            @for(ticket of tickets$ | async; track ticket._id) {
+            <app-ticket-component [ticket]="ticket"></app-ticket-component>
+            }
+            }
+
+        </div>
+        }
+
+    </div>
+</section>
