@@ -12,7 +12,6 @@ import { CommonModule } from '@angular/common';
   styleUrl: './home-recent-plays.css'
 })
 export class HomeRecentPlays {
-// when server is available, fetch the recent plays
   play$: Observable<Play[]>;
 
   constructor(private playsService: PlaysService) {

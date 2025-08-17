@@ -1,4 +1,4 @@
-<div class="play-item">
+<div class="ticket-item">
     @if(ticket) {
     <div class="left-side">
         <p>ticket</p>
@@ -15,8 +15,8 @@
                     <img src="images/logo.png" />
                 </div>
                 <div class="top-row">
-                    <div class="date-box">{{ticket.date}}</div>
-                    <div class="scene-time">{{ticket.place}} - {{ticket.date}}</div>
+                    <div class="date-box">{{ticket.date | playDateFormat: 'day'}}</div>
+                    <div class="scene-time">{{ticket.place}} - {{ticket.date | playDateFormat: 'time'}}</div>
                 </div>
 
 

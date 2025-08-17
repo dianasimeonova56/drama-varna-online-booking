@@ -1,12 +1,13 @@
-.play-item {
+.ticket-item {
     display: flex;
     width: 100%;
     height: auto;
     flex-wrap: wrap;
+    font-size: 0.9rem;
 }
 
 .left-side {
-    width: 80px;
+    width: 40px;
     background-color: #ccc;
     display: flex;
     align-items: center;
@@ -16,11 +17,11 @@
 
 .left-side p {
     color: red;
-    font-size: 32px;
+    font-size: 20px;
     font-weight: bold;
     margin: 0;
     transform: rotate(-90deg);
-    letter-spacing: 10px;
+    letter-spacing: 5px;
 }
 
 .container {
@@ -38,14 +39,10 @@
 }
 
 .image {
-    /* position: absolute;
-    flex: 1; */
-    flex: 1 1 50%;
+    flex: 1 1 30%;
     background-color: #eee;
-    min-width: 300px;
-    max-width: 600px;
-    /* display: flex;
-    flex-direction: column; */
+    min-width: 100px;
+    max-width: 200px;
 }
 
 .image img {
@@ -57,38 +54,38 @@
 
 
 .right-side {
-    flex: 1 1 50%;
+    flex: 1 1 70%;
     background-color: #c62828;
     color: white;
-    padding: 20px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-width: 300px;
-    max-width: 600px;
+    min-width: 150px;
+    max-width: 400px;
     box-sizing: border-box;
 }
 
 .top-row {
     display: flex;
     align-items: center;
-    gap: 15px;
-    margin-bottom: 20px;
+    gap: 10px;
+    margin-bottom: 10px;
 }
 
 .logo {
-    font-size: 14px;
+    font-size: 8px;
     line-height: 1.4;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 
 .date-box {
     background-color: #ccc;
     color: #c62828;
-    font-size: 32px;
+    font-size: 20px;
     font-weight: bold;
-    width: 60px;
-    height: 60px;
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -98,23 +95,23 @@
 .scene-time {
     background-color: #ccc;
     color: #c62828;
-    font-size: 16px;
-    padding: 10px 15px;
-    height: 60px;
+    font-size: 14px;
+    padding: 5px 10px;
+    height: 40px;
     display: flex;
     align-items: center;
     font-weight: bold;
-     cursor: pointer;
+    cursor: pointer;
 }
 
 .title {
-    font-size: 48px;
+    font-size: 24px;
     font-weight: bold;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .info p {
-    font-size: 16px;
+    font-size: 14px;
     line-height: 1.6;
     margin: 0;
 }

@@ -1,16 +1,17 @@
 import { Component, Input } from '@angular/core';
 import { Ticket } from '../../../models';
-// import { PlayDateFormatPipe } from "../../pipes/playDateFormat.pipe";
+import { PlayDateFormatPipe } from "../../../shared/pipes/playDateFormat.pipe";
+
 
 @Component({
   selector: 'app-ticket-component',
-  imports: [],
+  imports: [PlayDateFormatPipe],
   templateUrl: './ticket-component.html',
   styleUrl: './ticket-component.css'
 })
 export class TicketComponent {
-@Input() ticket!: Ticket | null;
-  
+  @Input() ticket!: Ticket | null;
+
 
   ngOnInit(): void {
   }
