@@ -17,16 +17,17 @@ export class TicketsService {
 
     constructor(private httpClient: HttpClient) { }
 
-    getTickets(userId: string | null): Observable<Ticket[]> {
-        return this.httpClient.get<Ticket[]>(`${this.apiUrl}/${userId}`, { withCredentials: true })
+    getTickets(bookingId: string | null): Observable<Ticket[]> {
+        return this.httpClient.get<Ticket[]>(`${this.apiUrl}/${bookingId}`, { withCredentials: true })
             .pipe(
                 tap(tickets => this.ticketBehaviourSubject.next(tickets))
             );
     }
 
     getTicket(ticketId: string | null): Observable<Ticket> {
-        return this.httpClient.get<Ticket>(`${this.apiUrl}/${ticketId}`).pipe(
-            tap(ticket => this.selectedTicketBehaviourSubject.next(ticket))
-        );
+        return this.httpClient.get<Ticket>(`${this.apiUrl}/${ticketId}`, { withCredentials: true })
+            .pipe(
+                tap(ticket => this.selectedTicketBehaviourSubject.next(ticket))
+            );
     }
 }

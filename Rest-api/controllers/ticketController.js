@@ -1,32 +1,37 @@
 const { ticketModel, bookingModel, playModel } = require('../models');
 
 function getTickets(req, res, next) {
-    ticketModel.find()
-        .populate('userId')
-        .then(tickets => res.json(tickets))
+    const { bookingId } = req.params;
+    ticketModel.find({bookingId: bookingId})
+        .populate('playId', 'playName place imageUrl')
+        .then(tickets => {
+            if (!tickets || tickets.length === 0)
+                return res.status(404).json({ message: 'Tickets not found' });
+            res.json(tickets);
+        })
         .catch(next);
 }
 
 function getTicket(req, res, next) {
     const { ticketId } = req.params;
 
-    ticketModel.findById(ticketId)
-        .populate('userId')
+    ticketModel.find({ ticketId })
+        .populate('userId', 'username email')
+        .populate('playId', 'playName place imageUrl')
         .then(ticket => {
-            if (!ticket) return res.status(404).json({ message: 'Ticket not found' });
+            if (!ticket)
+                return res.status(404).json({ message: 'Ticket not found' });
             res.json(ticket);
         })
         .catch(next);
 }
 
 async function generateTicketsForBooking(bookingData) {
-
     try {
         const booking = await bookingModel.findById(bookingData._id);
 
         if (!booking) {
-            //TODO not log but return error
-            console.log("Booking not found!");
+            throw new Error("Booking not found!");
         }
         const play = await playModel.findById(bookingData.playId);
 
@@ -38,7 +43,7 @@ async function generateTicketsForBooking(bookingData) {
 
 
         if (!play) {
-            console.log("Play not found!");
+            throw new Error("Play not found!");
 
         }
         const ticketsToCreate = [];
@@ -51,6 +56,7 @@ async function generateTicketsForBooking(bookingData) {
                 seat: seatNum,
                 userId: booking.userId,
                 playId: booking.playId,
+                bookingId: booking._id
             });
         }
 
@@ -59,7 +65,7 @@ async function generateTicketsForBooking(bookingData) {
         return tickets;
 
     } catch (err) {
-        console.log(err);
+        throw new Error(err)
 
     }
 }
@@ -68,7 +74,7 @@ function createTicket(req, res, next) {
     const { ticketData } = req.body;
     const { _id: userId } = req.user;
 
-    ticketModel.create({ ...ticketData, userId })
+    ticketModel.create({ ...ticketData, userId, bookingId: ticketData.bookingId })
         .then(ticket => res.status(201).json(ticket))
         .catch(next);
 }

@@ -28,6 +28,11 @@ const ticketSchema = new mongoose.Schema({
         ref: 'Play',
         required: true
     },
+    bookingId: {
+        type: ObjectId,
+        ref: "Booking",
+        required: true
+    }
 }, { timestamps: { createdAt: 'created_at' } });
 
 module.exports = mongoose.model('Ticket', ticketSchema);
