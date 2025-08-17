@@ -1,0 +1,40 @@
+/* body, html {
+  height: 100%;
+  margin: 0;
+} */
+
+.page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+    padding: 20px;
+    width: 100%;
+    overflow: hidden;
+    gap: 20px;
+    background-color: aliceblue;
+}
+
+.confirmation {
+    text-align: center;
+    font-size: 50px;
+}
+
+.info {
+    text-align: center;
+    font-size: 25px;
+}
+
+.info a {
+    color: #cd2122;
+}

@@ -62,6 +62,13 @@ export const routes: Routes = [
           data: { roles: ['user'] }
      },
      {
+          path: 'confirmation',
+          loadComponent: () => import('./features/booking/confirmation/confirmation')
+               .then(m => m.Confirmation),
+          canActivate: [authGuard, roleGuard],
+          data: { roles: ['user'] }
+     },
+     {
           path: 'logout',
           redirectTo: '/home',
           pathMatch: 'full'

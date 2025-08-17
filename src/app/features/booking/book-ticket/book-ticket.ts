@@ -57,7 +57,7 @@ export class BookTicket {
       }
 
       this.bookingService.createBooking(bookingData).subscribe({
-        next: () => this.router.navigate(['/plays']),
+        next: () => this.router.navigate(['/confirmation']),
         error: (err) => {
           console.error('Failed to create booking:', err);
           this.markFormGroupTouched();
