@@ -5,18 +5,23 @@ import { Pipe, PipeTransform } from "@angular/core";
 })
 
 export class PlayDateFormatPipe implements PipeTransform {
-    transform(value: string, format: 'day' | 'month' | 'time' | 'full' = 'full'): string {
-        const date = new Date(value);
+    transform(value: string | Date, format: 'day' | 'month' | 'time' | 'full' = 'full'): string {
+        let date: Date;
+        if (typeof value === 'string') {
+            date = new Date(value);
+        } else {
+            date = value;
+        }
 
-        switch(format) {
+        switch (format) {
             case "day":
                 return date.getDate().toString();
             case "month":
-                return date.toLocaleString('en-US', {month: 'long'}).toLowerCase();
+                return date.toLocaleString('en-US', { month: 'long' }).toLowerCase();
             case "time":
-                return date.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'})
+                return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
             case "full":
-            default: 
+            default:
                 return date.toLocaleString('en-US', {
                     day: '2-digit',
                     month: 'long',
