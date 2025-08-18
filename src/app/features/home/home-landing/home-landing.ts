@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -10,15 +10,6 @@ import { CommonModule } from '@angular/common';
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class HomeLanding   {
-  // swiper!: Swiper;
-  
-  // ngAfterViewInit() {
-  //   this.swiper = new Swiper('.swiper-container', {
-  //     loop: true,
-  //     autoplay: { delay: 3000 },
-  //     navigation: true,
-  //   });
-  // }
   slides = [
     {
       src: 'images/dramavarna1.jpg',
@@ -29,7 +20,4 @@ export class HomeLanding   {
       title: 'Theater',
     }
   ];
-  trackBySrc(index: number, slide: any): string {
-    return slide.src;
-  }
 }
