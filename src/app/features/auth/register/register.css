@@ -48,3 +48,12 @@ button:disabled {
   background: #aaa;
   cursor: not-allowed;
 }
+
+.account {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.account a {
+  color: #cd2122;
+}

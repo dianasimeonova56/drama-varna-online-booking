@@ -4,8 +4,7 @@
   padding: 2rem;
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.1);
-  font-family: sans-serif;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
@@ -49,7 +48,7 @@ button {
 }
 
 button:disabled {
-  background: #cd2122;
+  background: #aaa;
   cursor: not-allowed;
 }
 
@@ -66,4 +65,13 @@ button:disabled {
   padding: 0.6rem;
   border-radius: 6px;
   font-size: 0.9rem;
+}
+
+.account {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.account a {
+  color: #cd2122;
 }
