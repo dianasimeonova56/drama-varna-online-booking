@@ -29,7 +29,6 @@ export class PlayDetailsComponent {
   //spinner?
   constructor(private route: ActivatedRoute) { }
 
-
   ngOnInit(): void {
     const playId = this.route.snapshot.paramMap.get('playId');
     if (playId) {

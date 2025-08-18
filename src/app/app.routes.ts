@@ -3,40 +3,48 @@ import { NotFound } from './shared/components/index';
 import { authGuard } from './core/guards/auth.guard';
 import { guestGuard } from './core/guards/guest.guard';
 import { roleGuard } from './core/guards';
+import { titleResolver } from './features/play/play.title.resolver';
 
 export const routes: Routes = [
      {
           path: '',
           redirectTo: '/home',
+          title: "Drama Varna Tickets",
           pathMatch: 'full'
      },
      {
           path: 'home',
+          title: "Drama Varna Tickets",
           loadComponent: () => import('./features/home/home/home').then(c => c.Home)
      },
      {
           path: 'login',
+          title: "Log In",
           loadComponent: () => import('./features/auth/login/login').then(c => c.Login),
           canActivate: [guestGuard]
      },
      {
           path: 'register',
+          title: "Register",
           loadComponent: () => import('./features/auth/register/register').then(c => c.Register),
           canActivate: [guestGuard]
      },
      {
           path: 'profile',
+          title: "Profile",
           loadComponent: () => import('./features/profile/user-profile/user-profile').then(c => c.UserProfile),
           canActivate: [authGuard],
           data: { roles: ['user'] }
      },
      {
           path: 'plays',
+          title: "Plays",
           loadComponent: () => import('./features/play/plays-component/plays-component')
                .then(m => m.PlaysComponent)
      },
      {
           path: 'plays/create',
+          title: "Create Play",
           loadComponent: () => import('./features/play/create-play/create-play')
                .then(m => m.CreatePlay),
           canActivate: [roleGuard, authGuard],
@@ -51,6 +59,7 @@ export const routes: Routes = [
      },
      {
           path: 'plays/:playId',
+          title: titleResolver,
           loadComponent: () => import('./features/play/play-details/play-details')
                .then(m => m.PlayDetailsComponent)
      },
@@ -63,6 +72,7 @@ export const routes: Routes = [
      },
      {
           path: 'confirmation',
+          title: "Booking Success",
           loadComponent: () => import('./features/booking/confirmation/confirmation')
                .then(m => m.Confirmation),
           canActivate: [authGuard, roleGuard],
@@ -70,6 +80,7 @@ export const routes: Routes = [
      },
      {
           path: 'my-bookings',
+          title: "My Bookings",
           loadComponent: () => import('./features/booking/my-bookings/my-bookings')
                .then(m => m.MyBookings),
           canActivate: [authGuard, roleGuard],
