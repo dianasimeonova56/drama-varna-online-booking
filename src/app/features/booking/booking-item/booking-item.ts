@@ -14,26 +14,26 @@ import { CommonModule } from '@angular/common';
 })
 export class BookingItem {
   @Input() booking!: PopulatedBooking;
-  tickets$: Observable<Ticket[]>;
+  tickets: Ticket[] | null = null;
   expanded = false;
 
   private ticketsService = inject(TicketsService);
 
   constructor(private cdr: ChangeDetectorRef) {
-    this.tickets$ = this.ticketsService.tickets$;
+    //this.tickets$ = this.ticketsService.tickets$;
   }
 
   toggleTickets() {
     this.expanded = !this.expanded;
 
-    this.ticketsService.getTickets(this.booking._id).subscribe({
-      next: (tickets) => {
-        console.log(tickets);
-
-        this.cdr.markForCheck();
-      },
-      error: err => console.error(err),
-
-    });
+    if (!this.tickets) {
+      this.ticketsService.getTickets(this.booking._id).subscribe({
+        next: (tickets) => {
+          this.tickets = tickets;
+          this.cdr.markForCheck()
+        },
+        error: (err) => console.error(err)
+      });
+    }
   }
 }

@@ -38,8 +38,8 @@
         
     </div>
     <div class="tickets">
-            @if(expanded && tickets$) {
-            @for(ticket of tickets$ | async; track ticket._id) {
+            @if(expanded && tickets) {
+            @for(ticket of tickets; track ticket._id) {
             <app-ticket-component [ticket]="ticket"></app-ticket-component>
             }
             }
