@@ -30,11 +30,10 @@ export class StarRatingComponent implements OnInit {
     }
     this.playsService.getUserRating(this.playId).subscribe({
       next: ({ hasRated }) => {
-        //TODO log message
         this.hasRated = hasRated;
       },
       error: (err) => {
-        throw new Error(err)
+        throw new Error("Failed to get rating", err)
       }
     })
   }
