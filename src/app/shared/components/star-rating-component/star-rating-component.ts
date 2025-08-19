@@ -45,6 +45,7 @@ export class StarRatingComponent implements OnInit {
     }
     if (this.hasRated) {
       this.triedToRateAgain = true;
+      return;
     };
 
     this.hasRated = true;
@@ -58,11 +59,9 @@ export class StarRatingComponent implements OnInit {
           this.justRated = true;
         },
         error: err => {
-          console.error(err)
           this.justRated = false;
+          throw new Error('Failed to rate play', err)
         }
       })
   }
-
-
 }
