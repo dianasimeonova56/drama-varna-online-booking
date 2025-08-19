@@ -11,7 +11,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-plays-component',
-  imports: [CommonModule, PlayItem, Search, FaIconComponent, MatTooltipModule ],
+  imports: [CommonModule, PlayItem, Search, FaIconComponent, MatTooltipModule],
   templateUrl: './plays-component.html',
   styleUrl: './plays-component.css',
   changeDetection: ChangeDetectionStrategy.OnPush

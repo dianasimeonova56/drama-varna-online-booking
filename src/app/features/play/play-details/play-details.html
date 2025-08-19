@@ -1,46 +1,47 @@
-<div *ngIf="play$ | async as play; else loading">
+@if(play()) {
     <div class="play-item-details">
         <div class="container">
             <div class="image">
-                <img [src]="play.imageUrl" />
+                <img [src]="play()?.imageUrl" />
             </div>
             <div class="details">
                 <div class="content-wrapper">
                     <div class="left-side">
-                        <p>{{play.playDate | playDateFormat: 'month'}}</p>
+                        <p>{{play()?.playDate! | playDateFormat: 'month'}}</p>
                     </div>
                     <div class="right-side">
                         <div class="logo">
                             <img src="images/logo.png" />
                         </div>
                         <div class="top-row">
-                            <div class="date-box">{{play.playDate | playDateFormat: 'day'}}</div>
-                            <div class="scene-time">{{ play.place }} - {{play.playDate | playDateFormat: 'time'}}</div>
+                            <div class="date-box">{{play()?.playDate! | playDateFormat: 'day'}}</div>
+                            <div class="scene-time">{{ play()?.place }} - {{play()?.playDate! | playDateFormat: 'time'}}
+                            </div>
                             @if(this.role=='admin') {
-                            <div class="scene-time" [routerLink]="['/plays/edit', play._id]">Edit</div>
-                            <div class="scene-time" (click)="deletePlay(play._id)">Delete</div>
+                            <div class="scene-time" [routerLink]="['/plays/edit', play()?._id]">Edit</div>
+                            <div class="scene-time" (click)="deletePlay(play()?._id!)">Delete</div>
                             }
                             @if(this.role=='user') {
                             @if(this.availableSeats == 0) {
                             <div class="scene-time">Sold out</div>
                             } @else {
-                            <div class="scene-time" [routerLink]="['/book/', play._id]" appShowIfUpcoming
-                                [playDate]="play.playDate">
+                            <div class="scene-time" [routerLink]="['/book/', play()?._id]" appShowIfUpcoming
+                                [playDate]="play()?.playDate!">
                                 Book Ticket
                             </div>
                             }
                             }
                         </div>
 
-                        <div class="title">{{ play.playName }}</div>
+                        <div class="title">{{ play()?.playName }}</div>
 
                         <div class="info">
-                            <p>Director: <br />{{ play.director }}</p>
-                            <p>Description: <br />{{ play.description }}</p>
+                            <p>Director: <br />{{ play()?.director }}</p>
+                            <p>Description: <br />{{ play()?.description }}</p>
                             <p>Duration: <br /></p>
                             <p>Actors: <br /></p>
                             <p>Average Rating: <br /></p>
-                            <app-star-rating-component [rating]="averageRating()" [playId]="play._id"
+                            <app-star-rating-component [rating]="averageRating()" [playId]="play()?._id!"
                                 (ratingUpdated)="onRatingUpdate($event)"></app-star-rating-component>
                         </div>
                     </div>
@@ -49,8 +50,8 @@
 
         </div>
     </div>
-</div>
-
+    }
+<!-- 
 <ng-template #loading>
     <p>Loading...</p>
-</ng-template>
+</ng-template> -->

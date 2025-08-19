@@ -1,8 +1,7 @@
-import { ChangeDetectionStrategy, Component, inject, Input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { Play } from '../../../models';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { PlaysService } from '../../../core/services/plays.service';
-import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { StarRatingComponent } from "../../../shared/components";
 import { AuthService } from '../../../core/services';
@@ -17,7 +16,8 @@ import { ShowIfUpcomingDirective } from '../../../shared/directives';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlayDetailsComponent {
-  @Input() play$!: Observable<Play | null>;
+  // @Input() play$!: Observable<Play | null>;
+  play = signal<Play | null>(null);
   averageRating = signal(0);
   protected authService = inject(AuthService);
   protected playsService = inject(PlaysService);
@@ -26,27 +26,27 @@ export class PlayDetailsComponent {
 
   availableSeats!: number | undefined;
 
-  //spinner?
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     const playId = this.route.snapshot.paramMap.get('playId');
     if (playId) {
-      this.play$ = this.playsService.getPlay(playId);
-    }
-
-    this.play$.subscribe({
-      next: (play) => {
-        if (play?.ratings && play?.ratings.length > 0) {
-          const total = play?.ratings.reduce((sum, r) => sum + r.rating, 0);
-          this.averageRating.set(Number((total / play?.ratings.length).toFixed(2)));
-        } else {
-          this.averageRating.set(0)
+      this.playsService.getPlay(playId).subscribe({
+        next: (play) => {
+          this.play.set(play);
+          if (play?.ratings && play?.ratings.length > 0) {
+            const total = play?.ratings.reduce((sum, r) => sum + r.rating, 0);
+            this.averageRating.set(Number((total / play?.ratings.length).toFixed(2)));
+          } else {
+            this.averageRating.set(0)
+          }
+          this.availableSeats = play?.availableSeats;
+        },
+        error: (err) => {
+          throw new Error("Failed to load play", err);
         }
-        this.availableSeats = play?.availableSeats;
-      },
-      error: (err) => console.error('Failed to load play', err)
-    });
+      });
+    }
   }
 
   onRatingUpdate(newAverage: number): void {
