@@ -6,3 +6,21 @@
     gap: 25px;
     margin: 25px 0 25px 0;
 }
+
+.title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+fa-icon {
+    font-size: 20px;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+}
+
+fa-icon:hover{
+    color: #cd2122;
+}
+
+

@@ -2,6 +2,15 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
+.custom-tooltip {
+  background-color: #ccc; 
+  color: #333; 
+  padding: 0.5rem;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+
 :root {
   --swiper-navigation-color: #cd2122;      
   --swiper-pagination-color: #cd2122;       

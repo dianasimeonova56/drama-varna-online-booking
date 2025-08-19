@@ -1,25 +1,43 @@
 <app-search (searchEvent)="onSearch($event)"></app-search>
 <section class="plays">
-    <h2>Upcoming plays:</h2>
-    @if(loading) {
-    <p>Loading plays...</p>
-    } @else if (upcomingPlays.length) {
-    @for(play of upcomingPlays; track play._id) {
-    <app-play-item [play]="play"></app-play-item>
-    }
-    } @else {
-    <div>No upcoming plays to display!</div>
-    }
-
-    <h2>Past plays:</h2>
-    @if(loading) {
-    <p>Loading plays...</p>
-    }
-    @else if(pastPlays.length) {
-    @for(play of pastPlays; track play._id) {
-    <app-play-item [play]="play"></app-play-item>
-    }
-    } @else {
-    <div>No past plays to display!</div>
+    @if(showPlaysUpcoming) {
+        <div class="title">
+            <h2>Upcoming plays</h2>
+            <fa-icon [icon]="faRepeat" (click)="changeVisiblePlays()" 
+            matTooltip="Show Past Plays"
+            matTooltipPosition="after"
+            matTooltipShowDelay="100"
+            matTooltipHideDelay="100"
+            [matTooltipClass]="'custom-tooltip'"></fa-icon>
+        </div>
+        @if(loading) {
+            <p>Loading plays...</p>
+        } @else if (upcomingPlays.length) {
+            @for(play of upcomingPlays; track play._id) {
+                <app-play-item [play]="play"></app-play-item>
+            }
+        } @else {
+        <div>No upcoming plays to display!</div>
+        }
+    } @else if(showPlaysPassed) {
+        <div class="title">
+            <h2>Past plays</h2>
+            <fa-icon [icon]="faRepeat" (click)="changeVisiblePlays()" 
+            matTooltip="Show Upcoming Plays"
+            matTooltipPosition="after"
+            matTooltipShowDelay="200"
+            matTooltipHideDelay="100"
+            [matTooltipClass]="'custom-tooltip'"></fa-icon>
+        </div>
+        @if(loading) {
+            <p>Loading plays...</p>
+        }
+        @else if(pastPlays.length) {
+            @for(play of pastPlays; track play._id) {
+                <app-play-item [play]="play"></app-play-item>
+            }
+            } @else {
+            <div>No past plays to display!</div>
+        }
     }
 </section>
