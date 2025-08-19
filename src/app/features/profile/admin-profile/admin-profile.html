@@ -1,1 +1,65 @@
-<p>admin-profile works!</p>
+<div class="profile-container" [class.edit-open]="isEditMode" [class.show-plays]="showPlays">
+    <div class="profile-card">
+        <div class="profile-header">
+            <h2 class="title">{{ user()?.username }}</h2>
+        </div>
+
+        <div class="profile-details">
+            <div class="detail">
+                <span class="label">Role:</span>
+                <span class="value">{{ user()?.role }}</span>
+            </div>
+            <div class="plays-btn">
+                <button class="btn primary" (click)="togglePlays()">Load all plays</button>
+            </div>
+
+        </div>
+
+        <div class="profile-actions">
+            <button class="btn primary" (click)="toggleEdit()">Edit Profile</button>
+        </div>
+
+
+    </div>
+    @if(isEditMode) {
+    <div class="profile-edit">
+        <h2 class="title">Edit Profile</h2>
+        <form [formGroup]="editProfileForm" (ngSubmit)="onSave()">
+
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" formControlName="username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" formControlName="email" required>
+            </div>
+            <button type="submit" class="btn primary" [disabled]="editProfileForm.invalid" (click)="onSave()">
+                Save Changes
+            </button>
+        </form>
+    </div>
+    }
+</div>
+
+@if(showPlays) {
+<h2 class="title">Created plays</h2>
+<div class="plays-container">
+    <ul>
+        @for(play of plays$ | async; track play._id) {
+
+        <li>{{play.playName}}
+            <div class="icons">
+                <fa-icon [icon]="faCircleInfo" [routerLink]="['/plays', play._id]" matTooltip="Go to Play"
+                    matTooltipPosition="after" matTooltipShowDelay="100" matTooltipHideDelay="100"
+                    [matTooltipClass]="'custom-tooltip'"></fa-icon>
+                <fa-icon [icon]="faTrashCan" (click)="onDelete(play._id)" matTooltip="Delete Play"
+                    matTooltipPosition="after" matTooltipShowDelay="100" matTooltipHideDelay="100"
+                    [matTooltipClass]="'custom-tooltip'"></fa-icon>
+            </div>
+        </li>
+        }
+    </ul>
+</div>
+}

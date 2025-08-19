@@ -1,0 +1,273 @@
+.profile-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.profile-container.edit-open {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.profile-card {
+    background: var(--surface-color, #fff);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 1rem;
+    max-width: 400px;
+    width: 100%;
+    overflow: hidden;
+    transition: transform 0.2s ease;
+    margin: 2rem 2rem;
+    padding: 2rem;
+}
+
+.profile-card:hover {
+    transform: translateY(-4px);
+}
+
+
+.profile-header {
+    text-align: center;
+    padding: 2rem 1rem;
+    border-bottom: 1px solid var(--border-color, #ddd);
+}
+
+.title {
+    font-size: 1.5rem;
+    margin: 0;
+    justify-self: center;
+}
+
+.email {
+    color: var(--text-secondary, #666);
+    font-size: 0.9rem;
+}
+
+.profile-details {
+    padding: 1rem 2rem;
+}
+
+.detail {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border-color, #eee);
+}
+
+.plays-btn {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+.detail:last-child {
+    border-bottom: none;
+}
+
+.label {
+    font-weight: bold;
+    color: var(--text-primary, #333);
+}
+
+.value {
+    color: var(--text-secondary, #555);
+}
+
+.profile-actions {
+    display: flex;
+    justify-content: space-around;
+    padding: 1rem;
+    border-top: 1px solid var(--border-color, #ddd);
+}
+
+.btn {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.btn.primary {
+    background: var(--primary-color, #cd2122);
+    color: white;
+}
+
+.btn.primary:hover {
+    background: var(--primary-dark, #a01212);
+}
+
+.btn.danger {
+    background: var(--danger-color, #cd2122);
+    color: white;
+}
+
+.btn.danger:hover {
+    background: var(--danger-dark, #a01212);
+}
+
+.profile-edit {
+    background: var(--surface-color, #fff);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 1rem;
+    max-width: 400px;
+    width: 50%;
+    overflow: hidden;
+    transition: transform 0.2s ease;
+    margin: 2rem 2rem;
+    padding: 2rem;
+
+}
+
+.profile-edit h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.profile-edit label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.profile-edit input {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.profile-edit input:focus {
+    border-color: #cd2122;
+    outline: none;
+}
+
+.profile-edit button {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    background: #cd2122;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.profile-edit button:disabled {
+    background: #aaa;
+    cursor: not-allowed;
+}
+
+.profile-edit .error {
+    color: red;
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
+}
+
+.profile-edit .error-message {
+    margin-top: 1rem;
+    color: #d8000c;
+    background: #ffd2d2;
+    padding: 0.6rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+
+.profile-edit .account {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.profile-edit .account a {
+    color: #cd2122;
+}
+
+.plays-container {
+    display: flex;
+    justify-content: center;
+    margin: 2rem auto;
+    max-width: 700px;
+    width: 100%;
+}
+
+.plays-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.plays-container li {
+    background: var(--surface-color, #fff);
+    padding: 1rem 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 500;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+.plays-container li:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.icons {
+    display: flex;
+    gap: 0.8rem;
+    margin-left: 1rem;;
+}
+
+.icons fa-icon {
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #666;
+    transition: color 0.2s ease, transform 0.15s ease;
+}
+
+.icons fa-icon:hover {
+    color: #cd2122;
+    transform: scale(1.1);
+}
+
+.profile-container.show-plays {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 2rem;
+}
+
+
+@media (max-width:600px) {
+    .profile-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-container.edit-open {
+        flex-direction: column;
+    }
+
+    .profile-card,
+    .profile-edit {
+        width: 90%;
+        max-width: none;
+    }
+}
