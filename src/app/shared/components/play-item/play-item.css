@@ -1,8 +1,11 @@
 .play-item {
     display: flex;
     width: 100%;
+    max-width: 1200px;
+    max-height: 500px;
     height: auto;
     flex-wrap: wrap;
+    overflow: hidden;
 }
 
 .left-side {
@@ -38,21 +41,17 @@
 }
 
 .image {
-    /* position: absolute;
-    flex: 1; */
-    flex: 1 1 50%;
-    background-color: #eee;
-    min-width: 300px;
-    max-width: 600px;
-    /* display: flex;
-    flex-direction: column; */
+  flex: 1 1 50%;
+  aspect-ratio: 4 / 3;
+  max-width: 800px;
+  background-color: #eee;
 }
 
 .image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 
@@ -104,7 +103,7 @@
     display: flex;
     align-items: center;
     font-weight: bold;
-     cursor: pointer;
+    cursor: pointer;
 }
 
 .title {
