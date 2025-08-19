@@ -12,11 +12,16 @@
                 <li>
                     <a routerLink="/plays" routerLinkActive="active">Plays</a>
                 </li>
+                @if(role() === 'user') {
                 <li>
                     <a routerLink="/profile" routerLinkActive="active">My Profile</a>
                 </li>
+                }
                 @if(role() === 'admin') {
-                    <li>
+                <li>
+                    <a routerLink="/admin" routerLinkActive="active">Admin Profile</a>
+                </li>
+                <li>
                     <a routerLink="/plays/create" routerLinkActive="active">Create Play</a>
                 </li>
                 }
