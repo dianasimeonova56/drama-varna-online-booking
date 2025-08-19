@@ -11,23 +11,18 @@
         <span class="value">{{ user.role }}</span>
       </div>
       <div class="detail">
-        <button class="btn primary" routerLink="/my-bookings" routerLinkActive="active">See Booked Plays</button>
+        <span class="label">Booked plays: </span>
+        <span class="value">{{bookedPlaysNum()}}</span>
       </div>
+      <div class="plays-btn">
+        <button class="btn primary" routerLink="/my-bookings" routerLinkActive="active">See Booked
+          Plays</button>
+      </div>
+
     </div>
 
     <div class="profile-actions">
       <button class="btn primary">Edit Profile</button>
     </div>
-  </div>
-</div>
-<div class="booked-plays" [class.open]="isOpen()">
-  <div class="content">
-    <!-- @if(isOpen()) {
-      @for(booking of bookings(); track booking._id) {
-         <app-booking-item [booking]="booking"></app-booking-item>
-      }
-     
-      } -->
-      
   </div>
 </div>
