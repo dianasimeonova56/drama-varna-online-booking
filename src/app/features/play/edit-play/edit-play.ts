@@ -21,7 +21,7 @@ export class EditPlay {
   constructor() {
     this.editPlayForm = this.formBuilder.group({
       playName: ['', [Validators.required, Validators.minLength(5)]],
-      director: [''],
+      director: ['', [Validators.required]],
       description: ['', [Validators.required, Validators.minLength(25)]],
       imageUrl: ['', [Validators.required, Validators.pattern(/^https?:\/\//)]],
       playDate: ['', [Validators.required, this.minDateValidator, this.timeRangeValidator]],
@@ -37,13 +37,15 @@ export class EditPlay {
   private loadPlay(id: string) {
     this.playsService.getPlay(id).subscribe({
       next: (play) => {
-
+        const formattedDate = play.playDate
+          ? new Date(play.playDate).toISOString().slice(0, 16)
+          : '';
         this.editPlayForm.patchValue({
           playName: play.playName,
           director: play.director,
           description: play.description,
           imageUrl: play.imageUrl,
-          playDate: play.playDate,
+          playDate: formattedDate,
           place: play.place
         });
       },
@@ -73,9 +75,16 @@ export class EditPlay {
     return this.editPlayForm.get('playDate');
   }
 
+  get place(): AbstractControl<any, any> | null {
+    return this.editPlayForm.get('place');
+  }
 
   get isPlayNameValid(): boolean {
     return this.playName?.invalid && (this.playName?.dirty || this.playName?.touched) || false;
+  }
+
+  get isDirectorValid(): boolean {
+    return this.director?.invalid && (this.director?.dirty || this.director?.touched) || false;
   }
 
   get isDescriptionValid(): boolean {
@@ -84,6 +93,14 @@ export class EditPlay {
 
   get isImageUrlValid(): boolean {
     return this.imageUrl?.invalid && (this.imageUrl?.dirty || this.imageUrl?.touched) || false;
+  }
+
+  get isPlayDateValid(): boolean {
+    return this.playDate?.invalid && (this.playDate?.dirty || this.playDate?.touched) || false;
+  }
+
+  get isPlaceValid(): boolean {
+    return this.place?.invalid && (this.place?.dirty || this.place?.touched) || false;
   }
 
   get playNameErrorMessage(): string {
@@ -98,12 +115,20 @@ export class EditPlay {
     return '';
   }
 
+  get directorErrorMessage(): string {
+    if (this.director?.errors?.['required']) {
+      return 'Director name is required!';
+    }
+
+    return '';
+  }
+
   get descriptionErrorMessage(): string {
     if (this.description?.errors?.['required']) {
       return 'description is required!';
     }
 
-    if (this.description?.errors?.['pattern']) {
+    if (this.description?.errors?.['minlength']) {
       return 'description must be at least 25 chars!';
     }
 
@@ -126,18 +151,26 @@ export class EditPlay {
       return 'Play Date is required!';
     }
 
-    if (this.playDate?.errors?.['invalidDate']) {
+    if (this.playDate?.errors?.['invaliddate']) {
       return 'Play Date should be before the current date!';
     }
-    if (this.playDate?.errors?.['invalidTime']) {
+    if (this.playDate?.errors?.['invalidtime']) {
       return 'Play Date Time should be between 10:00 and 20:00!';
     }
+    return '';
+  }
+
+  get placeErrorMessage(): string {
+    if (this.place?.errors?.['required']) {
+      return 'Choosing a place is required!';
+    }
+
     return '';
   }
   onSubmit(): void {
     if (this.editPlayForm.valid && this.playId) {
       this.playsService.editPlay(this.playId, this.editPlayForm.value).subscribe({
-        next: () =>this.router.navigate(['/plays']),
+        next: () => this.router.navigate(['/plays']),
         error: (err) => {
           console.error('Failed to update play:', err);
           this.markFormGroupTouched();
@@ -161,13 +194,12 @@ export class EditPlay {
     const hour = date.getHours();
 
     if (hour < 10 || hour > 20) {
-      return { invalidTime: true };
+      return { invalidtime: true };
     }
 
     return null;
   }
 
-  //TODO
   private minDateValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
     if (!value) return null;
@@ -176,7 +208,7 @@ export class EditPlay {
     const currentDate = new Date();
 
     if (date < currentDate) {
-      return { invalidDate: true };
+      return { invaliddate: true };
     }
     return null;
   }

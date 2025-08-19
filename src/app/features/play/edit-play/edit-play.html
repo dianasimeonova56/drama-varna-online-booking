@@ -13,6 +13,11 @@
 
             <label for="director">Directors</label>
             <input id="director" type="director" formControlName="director" />
+            @if(isDirectorValid) {
+            <p class="error">
+                {{ directorErrorMessage }}
+            </p>
+            }
 
             <label for="description">Description</label>
             <textarea id="description" formControlName="description"></textarea>
@@ -32,15 +37,25 @@
 
             <label for="playDate">Date</label>
             <input id="playDate" type="datetime-local" formControlName="playDate" />
+            @if(isPlayDateValid) {
+            <p class="error">
+                {{ playDateErrorMessage }}
+            </p>
+            }
             
 
             <label for="place">Place</label>
             <select formControlName="place" >
-                <option selected>Choose place for play</option>
                 <option>Main Stage</option>
                 <option>Secondary stage</option>
                 <option>Opera</option>
             </select>
+            @if(isPlaceValid) {
+            <p class="error">
+                {{ placeErrorMessage }}
+            </p>
+            }
+
 
         </div>
 
