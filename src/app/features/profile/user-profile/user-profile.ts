@@ -86,11 +86,6 @@ export class UserProfile implements OnInit {
     return '';
   }
 
-  onCancel(): void {
-    this.isEditMode = false;
-    this.editProfileForm.reset();
-  }
-
   onSave(): void {
     if (this.editProfileForm.valid) {
       const { username, email } = this.editProfileForm.value;
