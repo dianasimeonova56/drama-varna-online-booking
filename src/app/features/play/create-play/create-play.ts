@@ -19,7 +19,7 @@ export class CreatePlay {
   constructor() {
     this.createPlayForm = this.formBuilder.group({
       playName: ['', [Validators.required, Validators.minLength(5)]],
-      director: [''],
+      director: ['', [Validators.required]],
       description: ['', [Validators.required, Validators.minLength(25)]],
       imageUrl: ['', [Validators.required, Validators.pattern(/^https?:\/\//)]],
       playDate: ['', [Validators.required, this.minDateValidator, this.timeRangeValidator]],
@@ -47,9 +47,16 @@ export class CreatePlay {
     return this.createPlayForm.get('playDate');
   }
 
+  get place(): AbstractControl<any, any> | null {
+    return this.createPlayForm.get('place');
+  }
 
   get isPlayNameValid(): boolean {
     return this.playName?.invalid && (this.playName?.dirty || this.playName?.touched) || false;
+  }
+
+  get isDirectorValid(): boolean {
+    return this.director?.invalid && (this.director?.dirty || this.director?.touched) || false;
   }
 
   get isDescriptionValid(): boolean {
@@ -60,13 +67,29 @@ export class CreatePlay {
     return this.imageUrl?.invalid && (this.imageUrl?.dirty || this.imageUrl?.touched) || false;
   }
 
+  get isPlayDateValid(): boolean {
+    return this.playDate?.invalid && (this.playDate?.dirty || this.playDate?.touched) || false;
+  }
+
+  get isPlaceValid(): boolean {
+    return this.place?.invalid && (this.place?.dirty || this.place?.touched) || false;
+  }
+
   get playNameErrorMessage(): string {
     if (this.playName?.errors?.['required']) {
-      return 'playName is required!';
+      return 'Play name is required!';
     }
 
     if (this.playName?.errors?.['minlength']) {
-      return 'playName should have at least 5 characters!';
+      return 'Play name should have at least 5 characters!';
+    }
+
+    return '';
+  }
+
+  get directorErrorMessage(): string {
+    if (this.director?.errors?.['required']) {
+      return 'Director name is required!';
     }
 
     return '';
@@ -74,11 +97,11 @@ export class CreatePlay {
 
   get descriptionErrorMessage(): string {
     if (this.description?.errors?.['required']) {
-      return 'description is required!';
+      return 'Description is required!';
     }
 
-    if (this.description?.errors?.['pattern']) {
-      return 'description must be at least 25 chars!';
+    if (this.description?.errors?.['minlength']) {
+      return 'Description must be at least 25 chars!';
     }
 
     return '';
@@ -100,21 +123,27 @@ export class CreatePlay {
       return 'Play Date is required!';
     }
 
-    if (this.playDate?.errors?.['invalidDate']) {
-      return 'Play Date should be before the current date!';
+    if (this.playDate?.errors?.['invaliddate']) {
+      return 'Play Date should be after the current date!';
     }
 
-    if (this.playDate?.errors?.['invalidTime']) {
+    if (this.playDate?.errors?.['invalidtime']) {
       return 'Play Date Time should be between 10:00 and 20:00!';
     }
+    return '';
+  }
+
+  get placeErrorMessage(): string {
+    if (this.place?.errors?.['required']) {
+      return 'Choosing a place is required!';
+    }
+
     return '';
   }
 
   onSubmit(): void {
     if (this.createPlayForm.valid) {
       const body = this.createPlayForm.value;
-      console.log(body);
-
 
       this.playsService.createPlay(body).subscribe({
         next: () => {
@@ -125,6 +154,8 @@ export class CreatePlay {
           this.markFormGroupTouched();
         }
       });
+    } else {
+      throw new Error("Form is invalid!")
     }
   }
 
@@ -150,7 +181,7 @@ export class CreatePlay {
     const hour = date.getHours();
 
     if (hour < 10 || hour > 20) {
-      return { invalidTime: true };
+      return { invalidtime: true };
     }
 
     return null;
@@ -164,7 +195,7 @@ export class CreatePlay {
     const currentDate = new Date();
 
     if (date < currentDate) {
-      return { invalidDate: true };
+      return { invaliddate: true };
     }
     return null;
   }
