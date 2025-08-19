@@ -11,7 +11,7 @@ const playSchema = new mongoose.Schema({
         required: true
     },
     playDate: {
-        type: String,
+        type: Date,
         required: true
     },
     place: {

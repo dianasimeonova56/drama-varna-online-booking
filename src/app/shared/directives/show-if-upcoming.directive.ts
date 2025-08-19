@@ -5,7 +5,7 @@ import { Directive, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
   standalone: true
 })
 export class ShowIfUpcomingDirective implements OnInit {
-  @Input() playDate!: string;
+  @Input() playDate!: string | Date;
 
   constructor(private el: ElementRef, private renderer: Renderer2) {}
 

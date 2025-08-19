@@ -5,7 +5,7 @@ export interface Play {
     director: Array<string>;
     playName: string;
     description: string;
-    playDate: string;
+    playDate: Date;
     place: string;
     imageUrl: string;
     totalSeats: number;
