@@ -6,3 +6,10 @@
     gap: 25px;
     margin: 25px 0 25px 0;
 }
+
+.title {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}

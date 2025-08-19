@@ -1,4 +1,7 @@
 <section class="bookings">
+      <div class="title">
+            <h2>{{username}}'s Booked Plays</h2>
+        </div>
     @for(booking of bookings$ | async; track booking._id) {
     <app-booking-item [booking]="booking"></app-booking-item>
             }

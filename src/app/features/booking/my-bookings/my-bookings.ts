@@ -18,6 +18,7 @@ export class MyBookings implements OnInit {
 
   bookings$: Observable<PopulatedBooking[]>;
   userId: string | null = '';
+  username: string | undefined = ''
 
   constructor() {
     this.bookings$ = this.bookingsService.populatedBookings$;
@@ -25,6 +26,7 @@ export class MyBookings implements OnInit {
 
   ngOnInit(): void {
     this.userId = this.authService.getCurrentUserId();
+    this.username = this.authService.currentUser()?.username
     this.bookingsService.getBookings(this.userId).subscribe({
       next: (bookings) => { },
       error: (err) => {
