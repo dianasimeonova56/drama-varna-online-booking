@@ -10,4 +10,6 @@
 <p>You have already rated this play! :)</p>
 } @else if (justRated) {
 <p>Thank you for your rating!</p>
+} @else if (!authService.isLoggedIn()) {
+  <p>Log in to rate this play.</p>
 }

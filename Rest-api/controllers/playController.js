@@ -107,6 +107,8 @@ async function addRating(req, res, next) {
     const { rating } = req.body;
     const userId = req.user._id.toString();
 
+    if(!userId) return;
+
 
     try {
         const play = await playModel.findById(playId);

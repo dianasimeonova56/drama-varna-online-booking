@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
 import { faStar } from '@fortawesome/free-solid-svg-icons/faStar';
 import { PlaysService } from '../../../core/services/plays.service';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../core/services';
 
 @Component({
   selector: 'app-star-rating-component',
@@ -14,6 +15,7 @@ export class StarRatingComponent implements OnInit {
   @Input() rating!: number | null;
   @Input() playId!: string;
   @Output() ratingUpdated = new EventEmitter<number>();
+  protected authService = inject(AuthService);
   faStar = faStar;
   hasRated = false;
   justRated = false;
@@ -22,16 +24,25 @@ export class StarRatingComponent implements OnInit {
   constructor(private playsService: PlaysService) { }
 
   ngOnInit() {
+    if (!this.authService.isLoggedIn()) {
+      this.hasRated = true;
+      return;
+    }
     this.playsService.getUserRating(this.playId).subscribe({
       next: ({ hasRated }) => {
         //TODO log message
         this.hasRated = hasRated;
       },
-      error: (err) => console.error(err)
+      error: (err) => {
+        throw new Error(err)
+      }
     })
   }
 
   setRating(value: number) {
+    if (!this.authService.isLoggedIn()) {
+      throw new Error('Guests cannot rate plays');
+    }
     if (this.hasRated) {
       this.triedToRateAgain = true;
     };

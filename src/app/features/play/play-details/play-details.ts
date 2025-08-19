@@ -17,13 +17,13 @@ import { ShowIfUpcomingDirective } from '../../../shared/directives';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlayDetailsComponent {
-  @Input() play$!: Observable<Play|null>;
+  @Input() play$!: Observable<Play | null>;
   averageRating = signal(0);
   protected authService = inject(AuthService);
   protected playsService = inject(PlaysService);
   protected router = inject(Router);
   protected role = this.authService.getCurrentUserRole();
-  
+
   availableSeats!: number | undefined;
 
   //spinner?
@@ -50,6 +50,9 @@ export class PlayDetailsComponent {
   }
 
   onRatingUpdate(newAverage: number): void {
+    if (!this.authService.isLoggedIn()) {
+      throw new Error('Guests cannot rate plays');
+    }
     this.averageRating.set(newAverage);
   }
 
