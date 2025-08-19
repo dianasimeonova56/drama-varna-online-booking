@@ -33,8 +33,15 @@ export const routes: Routes = [
           path: 'profile',
           title: "Profile",
           loadComponent: () => import('./features/profile/user-profile/user-profile').then(c => c.UserProfile),
-          canActivate: [authGuard],
+          canActivate: [roleGuard, authGuard],
           data: { roles: ['user'] }
+     },
+     {
+          path: 'admin',
+          title: "Admin Page",
+          loadComponent: () => import('./features/profile/admin-profile/admin-profile').then(c => c.AdminProfile),
+          canActivate: [roleGuard, authGuard],
+          data: { roles: ['admin'] }
      },
      {
           path: 'plays',
