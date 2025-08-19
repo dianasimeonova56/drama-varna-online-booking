@@ -52,7 +52,12 @@ export class PlaysService {
     }
 
     deletePlay(playId: string): Observable<void> {
-        return this.httpClient.delete<void>(`${this.apiUrl}/${playId}/delete`);
+        return this.httpClient.delete<void>(`${this.apiUrl}/${playId}/delete`).pipe(
+            tap(() => {
+                const current = this.playsBehaviourSubject.value;
+                this.playsBehaviourSubject.next(current.filter(p => p._id !== playId));//get the ones that are still available
+            })
+        );;
     }
 
     addRating(playId: string, rating: number) {
@@ -75,7 +80,7 @@ export class PlaysService {
         if (director) query = query.set('director', director);
         if (playDate) query = query.set('playDate', playDate.toString());
         console.log(playDate?.toString());
-        
+
 
         return this.httpClient.get<Play[]>(`${this.apiUrl}/search`, { params: query });
     }
