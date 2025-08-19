@@ -7,8 +7,8 @@ function newPlay(playData) {
 function getLatestsPlays(req, res, next) {
     const limit = Number(req.query.limit) || 0;
 
-    playModel.find()
-        .sort({ created_at: -1 })
+    playModel.find({ playDate: { $gte: new Date() } })
+        .sort({ playDate: 1 })
         .limit(limit)
         .then(plays => {
             res.status(200).json(plays)
@@ -107,7 +107,7 @@ async function addRating(req, res, next) {
     const { rating } = req.body;
     const userId = req.user._id.toString();
 
-    if(!userId) return;
+    if (!userId) return;
 
 
     try {
