@@ -33,14 +33,13 @@ export class PlaysComponent implements OnInit {
         this.upcomingPlays = plays.filter(p => new Date(p.playDate) >= this.today);
         this.pastPlays = plays.filter(p => new Date(p.playDate) < this.today);
         this.loading = false;
-        console.log(this.upcomingPlays);
-        console.log(this.pastPlays);
         this.cdr.markForCheck();
       },
       error: (err) => {
-        console.error('Failed to load plays', err);
         this.loading = false;
         this.cdr.markForCheck();
+        throw new Error(`Failed to load plays: ${err}`)
+
       }
     });
   }

@@ -47,7 +47,6 @@ export class PlaysService {
     editPlay(playId: string, playData: Partial<Play>): Observable<Play> {
         //Partial -> makes all propertied of the Play optional; ideal for patching data for request
         return this.httpClient.put<Play>(`${this.apiUrl}/${playId}/edit`, { playData }).pipe(
-
             tap(updatedPlay => this.selectedPlayBehaviourSubject.next(updatedPlay))
         );
     }

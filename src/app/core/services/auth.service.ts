@@ -26,7 +26,6 @@ export class AuthService {
         }
     }
 
-
     login(email: string, password: string): Observable<User> {
         return this.httpClient.post<User>(`${this.apiUrl}/login`, { email, password }, {
             withCredentials: true
@@ -74,8 +73,8 @@ export class AuthService {
         return this._currentUser()?._id || null
     }
 
-    updateUser(user: User): Observable<User> {
-        return this.httpClient.put<User>(`${this.apiUrl}/users/${user._id}`, {
+    updateUser(user: Partial<User>): Observable<User> {
+        return this.httpClient.put<User>(`${this.apiUrl}/users/${user._id}/edit`, {
             _id: user._id,
             username: user.username,
             email: user.email,
