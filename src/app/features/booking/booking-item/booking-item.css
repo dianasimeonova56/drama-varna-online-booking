@@ -124,6 +124,9 @@
 }
 
 .tickets {
-    display: flex;
-    gap: 5px;
+  flex-basis: 100%;   /* force full width */
+  order: 2;           /* push it below content */
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
 }
