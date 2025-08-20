@@ -71,20 +71,17 @@ button:disabled {
 
 
 
-@media (max-width: 900px) {
-  .booking-layout {
-    flex-direction: column;
-    height: auto; 
-    align-items: stretch;
+@media (max-width: 1400px) {
+  .container {
+    flex-direction: column;  
+    height: auto;           
+    align-items: stretch;  
   }
 
-  .play-wrapper,
+  .play-item,
   .form-container {
     width: 100%;
     max-width: none;
-  }
-
-  .form-container {
-    margin-top: 2rem;
+    margin-top: 1rem;
   }
 }

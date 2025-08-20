@@ -134,6 +134,28 @@
     min-height: 200px;
 }
 
+@media (max-width: 900px) {
+  .play-item {
+    max-height: none;
+    height: auto;
+  }
+
+  .image {
+    flex: 1 1 100%;
+    aspect-ratio: auto;
+  }
+
+  .right-side {
+    flex: 1 1 100%;
+    max-width: 100%;
+    min-width: unset;
+  }
+
+  .title {
+    font-size: 32px;
+  }
+}
+
 @keyframes fade-in {
   from { opacity: 0; }
   to { opacity: 1; }
