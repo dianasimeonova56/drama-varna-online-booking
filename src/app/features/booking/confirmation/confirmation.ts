@@ -1,25 +1,22 @@
 import { Component } from '@angular/core';
-import { loadFireworksPreset } from '@tsparticles/preset-fireworks';
-import { Engine } from '@tsparticles/engine';
-import { NgxParticlesModule } from "@tsparticles/angular";
 import { RouterModule } from '@angular/router';
+import { animate, style, transition, trigger } from '@angular/animations';
+
 
 @Component({
   selector: 'app-confirmation',
-  imports: [NgxParticlesModule, RouterModule],
+  imports: [RouterModule],
   templateUrl: './confirmation.html',
-  styleUrl: './confirmation.css'
+  styleUrl: './confirmation.css',
+  animations: [
+    trigger('fadeSlideIn', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(-20px)' }),
+        animate('600ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+      ])
+    ])
+  ]
 })
 export class Confirmation {
-
-  // particlesOptions = {
-  //   preset: 'fireworks', 
-  //   background: {
-  //     color: "transparent"
-  //   },
-  // };
-
-  // particlesInit = async (engine: Engine): Promise<void> => {
-  //   await loadFireworksPreset(engine);
-  // };
+  ngOnInit() {}
 }
