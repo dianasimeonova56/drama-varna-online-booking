@@ -60,7 +60,7 @@ export class StarRatingComponent implements OnInit {
         },
         error: err => {
           this.justRated = false;
-          this.errorService.setError(`Failed to rate play: ${err}`)
+          this.errorService.setError(`Failed to rate play`)
         }
       })
   }
