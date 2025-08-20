@@ -1,6 +1,11 @@
 <section class="container">
-    <div class="booking-item">
-        @if(booking) {
+    @if (loading) {
+    <div class="spinner-container fade-in fade-out">
+        <mat-progress-spinner mode="indeterminate" diameter="40"></mat-progress-spinner>
+    </div>
+    }
+    @else if(booking && !loading) {
+    <div class="booking-item appear">
         <div class="left-side">
             <p>booking</p>
         </div>
@@ -34,14 +39,16 @@
                 </div>
             </div>
         </div>
-        }
-        
     </div>
-    <div class="tickets">
-            @if(expanded && tickets) {
-            @for(ticket of tickets; track ticket._id) {
-            <app-ticket-component [ticket]="ticket"></app-ticket-component>
-            }
-            }
-        </div>
+    }
+
+    <div class="tickets appear">
+        @if(expanded && tickets) {
+        @for(ticket of tickets; track ticket._id) {
+        <app-ticket-component [ticket]="ticket"></app-ticket-component>
+        }
+        }
+    </div>
+
+
 </section>
