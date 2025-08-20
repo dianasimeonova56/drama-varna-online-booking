@@ -1,5 +1,9 @@
-<div class="ticket-item">
-    @if(ticket) {
+@if (loading) {
+<div class="spinner-container fade-in fade-out">
+    <mat-progress-spinner mode="indeterminate" diameter="40"></mat-progress-spinner>
+</div>
+}@else if(ticket && !loading) {
+<div class="ticket-item expand">
     <div class="left-side">
         <p>ticket</p>
     </div>
@@ -30,5 +34,5 @@
             </div>
         </div>
     </div>
-    }
 </div>
+}
