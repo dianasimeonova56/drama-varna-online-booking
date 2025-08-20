@@ -34,7 +34,6 @@ export class Search {
   @Output() searchEvent = new EventEmitter<{ playName?: string; director?: string; playDate?: Date }>();
 
   search() {
-    debugger
     this.searchEvent.emit({
       playName: this.searchForm.value.playName,
       director: this.searchForm.value.director,
