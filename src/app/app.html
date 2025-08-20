@@ -2,7 +2,9 @@
   <app-header>
   </app-header>
   <main>
-     <router-outlet></router-outlet>
+    <div [@routeTransition]="route.snapshot.data" style="display: contents">
+        <router-outlet></router-outlet>
+    </div>
      <app-error-notification></app-error-notification>
   </main>
   
