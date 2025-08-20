@@ -23,7 +23,7 @@
                         <div class="date-box">{{booking.playId.playDate | playDateFormat: 'day'}}</div>
                         <div class="scene-time">{{booking.playId.place}} - {{booking.playId.playDate | playDateFormat:
                             'time'}}</div>
-                        <div class="scene-time" (click)="toggleTickets()">
+                        <div class="scene-time cursor" (click)="toggleTickets()">
                             {{ expanded ? 'Hide Tickets' : 'Show Tickets' }}
                         </div>
                     </div>
