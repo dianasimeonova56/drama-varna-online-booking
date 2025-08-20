@@ -10,9 +10,7 @@
             matTooltipHideDelay="100"
             [matTooltipClass]="'custom-tooltip'"></fa-icon>
         </div>
-        @if(loading) {
-            <p>Loading plays...</p>
-        } @else if (upcomingPlays.length) {
+         @if (upcomingPlays.length) {
             @for(play of upcomingPlays; track play._id) {
                 <app-play-item [play]="play"></app-play-item>
             }
