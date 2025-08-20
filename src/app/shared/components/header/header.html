@@ -1,9 +1,10 @@
 <header>
     <div class="container">
         <div class="logo-wrap">
-            <img src="images/logo.png">
+            <img class="logo" routerLink="/" routerLinkActive="active" src="images/logo.png">
         </div>
-        <nav>
+         <img class="menu" src="menu.png" (click)="openMenu = !openMenu"/>
+        <nav class="desktop">
             <ul>
                 <li>
                     <a routerLink="/" routerLinkActive="active">Home</a>
@@ -12,12 +13,12 @@
                 <li>
                     <a routerLink="/plays" routerLinkActive="active">Plays</a>
                 </li>
-                @if(role() === 'user') {
+                @if(role === 'user') {
                 <li>
                     <a routerLink="/profile" routerLinkActive="active">My Profile</a>
                 </li>
                 }
-                @if(role() === 'admin') {
+                @if(role === 'admin') {
                 <li>
                     <a routerLink="/admin" routerLinkActive="active">Admin Profile</a>
                 </li>
@@ -39,4 +40,40 @@
             </ul>
         </nav>
     </div>
+
+    <div class="mobile" [class.open]="openMenu" [@slideDown]="openMenu ? 'open' : 'closed'">
+            <ul>
+                <li>
+                    <a routerLink="/" routerLinkActive="active">Home</a>
+                </li>
+                @if(isLoggedIn()) {
+                <li>
+                    <a routerLink="/plays" routerLinkActive="active">Plays</a>
+                </li>
+                @if(role === 'user') {
+                <li>
+                    <a routerLink="/profile" routerLinkActive="active">My Profile</a>
+                </li>
+                }
+                @if(role === 'admin') {
+                <li>
+                    <a routerLink="/admin" routerLinkActive="active">Admin Profile</a>
+                </li>
+                <li>
+                    <a routerLink="/plays/create" routerLinkActive="active">Create Play</a>
+                </li>
+                }
+                <li>
+                    <a routerLink="/logout" routerLinkActive="active" (click)="logout()">Logout</a>
+                </li>
+                } @else {
+                <li>
+                    <a routerLink="/login" routerLinkActive="active">Login</a>
+                </li>
+                <li>
+                    <a routerLink="/register" routerLinkActive="active">Register</a>
+                </li>
+                }
+            </ul>
+        </div>
 </header>

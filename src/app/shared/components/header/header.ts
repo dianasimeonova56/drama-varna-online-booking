@@ -1,12 +1,29 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../core/services';
+import { trigger, transition, style, animate, state } from '@angular/animations';
 
 @Component({
   selector: 'app-header',
   imports: [RouterModule],
   templateUrl: './header.html',
-  styleUrl: './header.css'
+  styleUrl: './header.css',
+  animations: [
+    trigger('slideDown', [
+      state('closed', style({
+        height: '0',
+        overflow: 'hidden',
+        opacity: 0
+      })),
+      state('open', style({
+        height: '*',
+        opacity: 1
+      })),
+      transition('closed <=> open', [
+        animate('0.5s ease-in-out')
+      ])
+    ])
+  ]
 })
 export class Header {
   protected authService = inject(AuthService)
@@ -15,8 +32,8 @@ export class Header {
   readonly isLoggedIn = this.authService.isLoggedIn;
   readonly currentUser = this.authService.currentUser;
 
-  // protected role = this.authService.getCurrentUserRole();
-  protected role = computed(() => this.currentUser()?.role);
+  protected role = this.currentUser()?.role;
+  openMenu: boolean = false;
 
   logout(): void {
     this.authService.logout().subscribe({
