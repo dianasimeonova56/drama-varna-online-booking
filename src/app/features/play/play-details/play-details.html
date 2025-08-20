@@ -18,14 +18,14 @@
                             <div class="scene-time">{{ play()?.place }} - {{play()?.playDate! | playDateFormat: 'time'}}
                             </div>
                             @if(this.role=='admin') {
-                            <div class="scene-time" [routerLink]="['/plays/edit', play()?._id]">Edit</div>
-                            <div class="scene-time" (click)="deletePlay(play()?._id!)">Delete</div>
+                            <div class="scene-time cursor" [routerLink]="['/plays/edit', play()?._id]">Edit</div>
+                            <div class="scene-time cursor" (click)="deletePlay(play()?._id!)">Delete</div>
                             }
                             @if(this.role=='user') {
                             @if(this.availableSeats == 0) {
                             <div class="scene-time">Sold out</div>
                             } @else {
-                            <div class="scene-time" [routerLink]="['/book/', play()?._id]" appShowIfUpcoming
+                            <div class="scene-time cursor" [routerLink]="['/book/', play()?._id]" appShowIfUpcoming
                                 [playDate]="play()?.playDate!">
                                 Book Ticket
                             </div>

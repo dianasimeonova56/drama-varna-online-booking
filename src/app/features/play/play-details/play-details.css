@@ -14,7 +14,6 @@
 
 .details {
     width: 100%;
-    /* Match image width */
     margin-top: 1rem;
     text-align: left;
 }
@@ -107,6 +106,15 @@
     display: flex;
     align-items: center;
     font-weight: bold;
+}
+
+.scene-time:hover, .date-box:hover {
+    transform: scale(1.05);
+    border-radius: 8px;
+}
+
+.cursor {
+    cursor: pointer;
 }
 
 .title {
