@@ -64,6 +64,7 @@ Credentials: email: admin@gmail.com, password: didi123.
 - Angular Animations (page transitions applied to whole application, item animations - mobile navigation, tooltips)
 - Fa Icons (switch between plays in Catalog, in Admin page for Delete/Show Play, Stars for rating plays)
 - Angular Materials (tooltips, spinner)
+- Swiper (for carousel in home page)
 - Directive (show button if play is upcoming, hide button if play has passed)
 - Pipe (format date of play to distribute elements in the play item for styling)
 - Interceptor (error interceptor to catch errors from the backend)

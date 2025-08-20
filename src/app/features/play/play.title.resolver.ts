@@ -1,5 +1,5 @@
 import { inject } from "@angular/core";
-import { ActivatedRoute, ResolveFn, Router } from "@angular/router";
+import { ResolveFn, Router } from "@angular/router";
 
 export const titleResolver: ResolveFn<string> = (route) => {
     const router = inject(Router);

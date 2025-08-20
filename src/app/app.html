@@ -1,12 +1,10 @@
+<app-header>
+</app-header>
+<main>
+  <div [@routeTransition]="route.snapshot.data" style="display: contents">
+    <router-outlet></router-outlet>
+  </div>
+  <app-error-notification></app-error-notification>
+</main>
 
-  <app-header>
-  </app-header>
-  <main>
-    <div [@routeTransition]="route.snapshot.data" style="display: contents">
-        <router-outlet></router-outlet>
-    </div>
-     <app-error-notification></app-error-notification>
-  </main>
-  
-  <app-footer></app-footer>
-
+<app-footer></app-footer>

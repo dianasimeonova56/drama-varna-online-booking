@@ -16,7 +16,6 @@ import { ShowIfUpcomingDirective } from '../../../shared/directives';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlayDetailsComponent {
-  // @Input() play$!: Observable<Play | null>;
   play = signal<Play | null>(null);
   averageRating = signal(0);
   protected authService = inject(AuthService);
