@@ -22,7 +22,7 @@
 .play-item {
   flex: 1;
   overflow: auto;
-  padding: 2rem;
+  padding: 1rem;
   box-sizing: border-box;
   background: #ffffff;
 }
