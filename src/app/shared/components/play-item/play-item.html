@@ -1,13 +1,17 @@
-<div class="play-item">
-  @if(play) {
+@if (loading) {
+  <div class="spinner-container fade-in fade-out">
+    <mat-progress-spinner mode="indeterminate" diameter="40"></mat-progress-spinner>
+  </div>
+} @else if (play && !loading) {
+  <div class="play-item appear">
   <div class="left-side">
-    <p>{{play.playDate | playDateFormat: 'month'}}</p>
+    <p>{{ play.playDate | playDateFormat: 'month' }}</p>
   </div>
 
   <div class="container">
     <div class="content-wrapper">
       <div class="image">
-        <img src="{{play.imageUrl}}" />
+        <img [src]="play.imageUrl" alt="{{ play.playName }}" />
       </div>
 
       <div class="right-side">
@@ -15,21 +19,24 @@
           <img src="images/logo.png" />
         </div>
         <div class="top-row">
-          <div class="date-box">{{play.playDate | playDateFormat: 'day'}}</div>
-          <div class="scene-time">{{play.place}} - {{play.playDate | playDateFormat: 'time'}}</div>
-          <div class="scene-time" [routerLink]="['/plays', play._id]" [state]="{ playName: play.playName }">Details</div>
+          <div class="date-box">{{ play.playDate | playDateFormat: 'day' }}</div>
+          <div class="scene-time">{{ play.place }} - {{ play.playDate | playDateFormat: 'time' }}</div>
+          <div
+            class="scene-time"
+            [routerLink]="['/plays', play._id]"
+            [state]="{ playName: play.playName }"
+          >
+            Details
+          </div>
         </div>
 
-
-        <div class="title">{{play.playName}}</div>
+        <div class="title">{{ play.playName }}</div>
 
         <div class="info">
-          <p>Director: <br />
-            {{play.director}}
-          </p>
+          <p>Director: <br />{{ play.director }}</p>
         </div>
       </div>
     </div>
   </div>
-  }
-</div>
+  </div>
+}
