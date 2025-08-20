@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PlaysService } from '../../../core/services/plays.service';
+import { ErrorService } from '../../../core/services';
 
 @Component({
   selector: 'app-create-play',
@@ -13,6 +14,7 @@ export class CreatePlay {
   private playsService = inject(PlaysService);
   private router = inject(Router);
   private formBuilder = inject(FormBuilder);
+  private errorService= inject(ErrorService)
 
   createPlayForm: FormGroup;
 
@@ -155,7 +157,7 @@ export class CreatePlay {
         }
       });
     } else {
-      throw new Error("Form is invalid!")
+      this.errorService.setError("Form is invalid!")
     }
   }
 

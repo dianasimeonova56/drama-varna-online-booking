@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit, signal } from '@angular/core';
-import { AuthService, BookingService } from '../../../core/services';
+import { AuthService, BookingService, ErrorService } from '../../../core/services';
 import { RouterLink } from '@angular/router';
 import { PopulatedBooking, User } from '../../../models';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -15,6 +15,7 @@ export class UserProfile implements OnInit {
   private bookingService = inject(BookingService);
   private authService = inject(AuthService);
   private formBuilder = inject(FormBuilder);
+  private errorService = inject(ErrorService)
   bookedPlaysNum = signal(0);
   user = signal<User | null>(null);
 
@@ -34,7 +35,7 @@ export class UserProfile implements OnInit {
     this.bookingService.getBookings(this.authService.getCurrentUserId() ?? null).subscribe({
       next: (plays: PopulatedBooking[]) => this.bookedPlaysNum.set((plays?.length) ?? 0),
       error: (err) => {
-        throw new Error(err);
+        this.errorService.setError(`Failed to load user: ${err}`)
       }
     });
   }
@@ -100,7 +101,7 @@ export class UserProfile implements OnInit {
         next: () => this.user.set(this.authService.currentUser())
         ,
         error: (err) => {
-          throw new Error(`Failed to update user: ${err}`)
+          this.errorService.setError(`Failed to save user: ${err}`)
         }
       });
 

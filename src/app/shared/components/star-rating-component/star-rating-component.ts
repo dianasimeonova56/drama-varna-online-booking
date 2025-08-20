@@ -3,7 +3,7 @@ import { FaIconComponent } from "@fortawesome/angular-fontawesome";
 import { faStar } from '@fortawesome/free-solid-svg-icons/faStar';
 import { PlaysService } from '../../../core/services/plays.service';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../../core/services';
+import { AuthService, ErrorService } from '../../../core/services';
 
 @Component({
   selector: 'app-star-rating-component',
@@ -12,6 +12,7 @@ import { AuthService } from '../../../core/services';
   styleUrl: './star-rating-component.css'
 })
 export class StarRatingComponent implements OnInit {
+  private errorService = inject(ErrorService)
   @Input() rating!: number | null;
   @Input() playId!: string;
   @Output() ratingUpdated = new EventEmitter<number>();
@@ -33,14 +34,14 @@ export class StarRatingComponent implements OnInit {
         this.hasRated = hasRated;
       },
       error: (err) => {
-        throw new Error("Failed to get rating", err)
+        this.errorService.setError(`Failed to get ratings: ${err}`)
       }
     })
   }
 
   setRating(value: number) {
     if (!this.authService.isLoggedIn()) {
-      throw new Error('Guests cannot rate plays');
+      this.errorService.setError("Guest cannot rate plays")
     }
     if (this.hasRated) {
       this.triedToRateAgain = true;
@@ -59,7 +60,7 @@ export class StarRatingComponent implements OnInit {
         },
         error: err => {
           this.justRated = false;
-          throw new Error('Failed to rate play', err)
+          this.errorService.setError(`Failed to rate play: ${err}`)
         }
       })
   }

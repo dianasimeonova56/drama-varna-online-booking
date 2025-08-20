@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { PlaysService } from '../../../core/services/plays.service';
 import { CommonModule } from '@angular/common';
 import { StarRatingComponent } from "../../../shared/components";
-import { AuthService } from '../../../core/services';
+import { AuthService, ErrorService } from '../../../core/services';
 import { PlayDateFormatPipe } from "../../../shared/pipes/playDateFormat.pipe";
 import { ShowIfUpcomingDirective } from '../../../shared/directives';
 
@@ -22,6 +22,7 @@ export class PlayDetailsComponent {
   protected authService = inject(AuthService);
   protected playsService = inject(PlaysService);
   protected router = inject(Router);
+  private errorService = inject(ErrorService);
   protected role = this.authService.getCurrentUserRole();
 
   availableSeats!: number | undefined;
@@ -43,7 +44,7 @@ export class PlayDetailsComponent {
           this.availableSeats = play?.availableSeats;
         },
         error: (err) => {
-          throw new Error("Failed to load play", err);
+         console.error("Failed to load play", err);
         }
       });
     }
@@ -51,7 +52,7 @@ export class PlayDetailsComponent {
 
   onRatingUpdate(newAverage: number): void {
     if (!this.authService.isLoggedIn()) {
-      throw new Error('Guests cannot rate plays');
+     this.errorService.setError('Guests cannot rate plays');
     }
     this.averageRating.set(newAverage);
   }

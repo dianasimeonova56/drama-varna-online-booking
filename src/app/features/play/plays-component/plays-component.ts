@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Play } from '../../../models';
 import { PlaysService } from '../../../core/services/plays.service';
@@ -8,6 +8,7 @@ import { Search } from "../../search/search/search";
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faRepeat } from '@fortawesome/free-solid-svg-icons/faRepeat';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ErrorService } from '../../../core/services';
 
 @Component({
   selector: 'app-plays-component',
@@ -17,6 +18,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlaysComponent implements OnInit {
+  private errorService = inject(ErrorService)
+
   plays$: Observable<Play[]>;
   upcomingPlays: Play[] = [];
   pastPlays: Play[] = [];
@@ -42,7 +45,7 @@ export class PlaysComponent implements OnInit {
       error: (err) => {
         this.loading = false;
         this.cdr.detectChanges();
-        throw new Error(`Failed to load plays: ${err}`)
+        this.errorService.setError(`Failed to load plays: ${err}`)
       }
     });
   }

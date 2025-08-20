@@ -82,7 +82,7 @@ function editPlay(req, res, next) {
                 res.status(200).json(updatedPlay);
             }
             else {
-                res.status(401).json({ message: `Not allowed!` });
+                res.status(401).json({ message: `Not allowed to edit play!` });
             }
         })
         .catch(next);

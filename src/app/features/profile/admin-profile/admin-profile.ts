@@ -109,7 +109,7 @@ export class AdminProfile {
         next: () => this.user.set(this.authService.currentUser())
         ,
         error: (err) => {
-          throw new Error(`Failed to update user: ${err}`)
+          console.error("Failed to update user", err)
         }
       });
 
@@ -128,7 +128,7 @@ export class AdminProfile {
           this.cdr.markForCheck()
          },
         error: (err) => {
-          throw new Error("Failed to delete play", err)
+          console.error("Failed to delete play", err)
         }
       })
     } else {

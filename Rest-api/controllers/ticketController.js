@@ -90,7 +90,7 @@ function editTicket(req, res, next) {
                 res.status(200).json(updatedTicket);
             }
             else {
-                res.status(401).json({ message: `Not allowed!` });
+                res.status(401).json({ message: `Not allowed to edit ticket!` });
             }
         })
         .catch(next);
