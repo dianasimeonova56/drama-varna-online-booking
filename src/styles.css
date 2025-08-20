@@ -1,6 +1,5 @@
 body {
   font-family: 'Poppins', sans-serif;
-
 }
 
 .custom-tooltip {
@@ -11,6 +10,14 @@ body {
   font-size: 0.9rem;
 }
 
+.custom-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  color: #cd2122;
+}
+
 
 :root {
   --swiper-navigation-color: #cd2122;
@@ -18,4 +25,9 @@ body {
   --swiper-pagination-bullet-inactive-color: #ccc;
   scrollbar-width: none;
   -ms-overflow-style: none;
+}
+
+.mat-mdc-progress-spinner circle,
+.mat-mdc-spinner circle {
+  stroke: #cd2122 !important;
 }
