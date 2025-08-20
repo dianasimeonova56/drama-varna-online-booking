@@ -1,7 +1,6 @@
 .search-bar {
     background-color: #cd2122;
     margin: 30px auto;
-    /*65px for small screen maybe?*/
     max-width: 1200px;
     width: 100%;
     padding: 10px 20px;
@@ -22,15 +21,14 @@
     flex: 1;
     min-width: 100px;
     max-width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
 }
 
 .search-btn {
     background-color: #ccc;
-    /* color: #c62828; */
     font-size: 14px;
     padding: 10px 12px;
-    /* height: 60px; */
-
     font-weight: bold;
     cursor: pointer;
     border: none;
