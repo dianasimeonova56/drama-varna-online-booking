@@ -1,20 +1,21 @@
-import { Component, computed, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { AsyncPipe } from '@angular/common'
 import { AuthService, PlaysService } from '../../../core/services';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Booking, Play } from '../../../models';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { PlayItem } from "../../../shared/components";
 import { BookingService } from '../../../core/services/booking.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-book-ticket',
-  imports: [ReactiveFormsModule, PlayItem, AsyncPipe],
+  imports: [ReactiveFormsModule, PlayItem, AsyncPipe, MatProgressSpinnerModule],
   templateUrl: './book-ticket.html',
   styleUrl: './book-ticket.css'
 })
-export class BookTicket {
+export class BookTicket implements OnInit {
   private authService = inject(AuthService);
   private playsService = inject(PlaysService);
   private bookingService = inject(BookingService);
@@ -25,13 +26,14 @@ export class BookTicket {
   bookTicketForm: FormGroup;
   playId: string | null = null;
   playName: string | null = null;
+  loading: boolean = true;
 
   playSubject = new BehaviorSubject<Play | null>(null);
   play$: Observable<Play | null>;
 
   readonly currentUser = this.authService.currentUser;
 
-  constructor() {
+  constructor(private cdr: ChangeDetectorRef) {
     this.bookTicketForm = this.formBuilder.group({
       seats: ['', [Validators.required, Validators.min(1)]],
     })
@@ -44,6 +46,13 @@ export class BookTicket {
         this.playName = play.playName;
       }
     });
+  }
+
+  ngOnInit() {
+    setTimeout(() => {
+      this.loading = false;
+      this.cdr.detectChanges();
+    }, 1000);
   }
 
   onSubmit(): void {
