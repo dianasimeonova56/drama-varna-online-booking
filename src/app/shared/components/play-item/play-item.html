@@ -22,7 +22,7 @@
           <div class="date-box">{{ play.playDate | playDateFormat: 'day' }}</div>
           <div class="scene-time">{{ play.place }} - {{ play.playDate | playDateFormat: 'time' }}</div>
           <div
-            class="scene-time"
+            class="scene-time cursor"
             [routerLink]="['/plays', play._id]"
             [state]="{ playName: play.playName }"
           >

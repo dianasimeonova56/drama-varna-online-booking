@@ -91,7 +91,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
 .scene-time {
@@ -103,7 +103,16 @@
     display: flex;
     align-items: center;
     font-weight: bold;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.cursor {
     cursor: pointer;
+}
+
+.scene-time:hover, .date-box:hover {
+    transform: scale(1.05);
+    border-radius: 8px;
 }
 
 .title {
