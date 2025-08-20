@@ -1,0 +1,14 @@
+{
+  "favorites": [],
+  "email": "admin@gmail.com",
+  "username": "admin",
+  "password": "$2b$05$rsH274SOk7jJagk3/90c1uZVd6eySZs5BTzGngNFsuB/bltqYHHJq",
+  "role": "admin",
+  "created_at": {
+    "$date": "2025-07-31T17:25:55.643Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-31T17:25:55.643Z"
+  },
+  "__v": 0
+}
